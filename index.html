@@ -28,6 +28,7 @@ body{font-family:Georgia,'Times New Roman',serif;background:#f5f0e8;color:#1a1a2
 .stat-l{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:#5a5a7a;margin-top:.2rem;font-weight:700}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.9rem}
 .fld{margin-bottom:.9rem}
 .lbl{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#5a5a7a;display:block;margin-bottom:.3rem}
 .req::after{content:" *";color:#c8102e}
@@ -52,7 +53,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#c8102e}
 .bidx{background:#e9ecef;color:#495057}
 .success-bar{background:#16a34a;color:#fff;padding:.9rem 1.4rem;border-radius:4px;text-align:center;font-weight:700;margin-bottom:1.2rem;display:none}
 .error-bar{background:#c8102e;color:#fff;padding:.9rem 1.4rem;border-radius:4px;text-align:center;font-weight:700;margin-bottom:1.2rem;display:none}
-.filter-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:.7rem;margin-bottom:1.2rem;align-items:end}
+.filter-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:.7rem;margin-bottom:1.2rem;align-items:end}
 .pub-title{font-size:1rem;font-weight:700;margin-bottom:.25rem;line-height:1.3}
 .pub-meta{font-size:.82rem;color:#5a5a7a;margin-bottom:.35rem}
 .empty{text-align:center;padding:3rem 1rem;color:#5a5a7a}
@@ -64,6 +65,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#c8102e}
 .pwd-box{background:#fffdf8;border-radius:8px;padding:2rem;width:340px;border:1px solid #d4c9b0}
 .loading{color:#5a5a7a;font-size:.85rem;font-style:italic}
 a{color:#c8102e}
+/* SDG Goal icon grid */
+.sdg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;margin-top:.5rem}
+.sdg-item{cursor:pointer;border-radius:4px;overflow:hidden;border:2px solid transparent;transition:all .15s;text-align:center}
+.sdg-item:hover{transform:scale(1.06)}
+.sdg-item.on{border-color:#1a2744;box-shadow:0 0 0 2px #1a2744}
+.sdg-box{width:100%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;font-size:.55rem;font-weight:700;color:#fff;line-height:1.15;text-align:center}
+.sdg-num{font-size:.85rem;font-weight:900;display:block}
+/* conditional section animation */
+.pub-details-section{border-top:2px dashed #d4c9b0;margin-top:.8rem;padding-top:1rem}
+/* author order helper */
+.author-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;background:#f5f0e8;border:1px solid #d4c9b0;border-radius:4px;padding:.4rem .7rem;cursor:grab}
+.author-row:active{cursor:grabbing}
+.author-drag-handle{color:#aaa;font-size:1.1rem;user-select:none}
+.author-add-row{display:flex;gap:.5rem;margin-top:.5rem}
 </style>
 </head>
 <body>
@@ -153,79 +168,196 @@ a{color:#c8102e}
   <div id="success-msg" class="success-bar">✅ Publication submitted successfully! Visible to all users now.</div>
   <div id="error-msg" class="error-bar">❌ Submission failed. Check connection and try again.</div>
 
+  <!-- ① DEPARTMENT -->
   <div class="card">
-    <div class="section-hd">Article Details</div>
-    <div class="fld"><label class="lbl req">Department</label>
+    <div class="section-hd">Department</div>
+    <div class="fld"><label class="lbl req">Select Department / College</label>
       <select id="f-dept">
-        <option value="">— Select Department —</option>
-        <option>Anatomy</option><option>Biochemistry</option><option>Community Medicine</option>
-        <option>Dermatology</option><option>ENT</option><option>Forensic Medicine</option>
-        <option>General Medicine</option><option>General Surgery</option><option>Microbiology</option>
-        <option>Obstetrics & Gynaecology</option><option>Ophthalmology</option><option>Orthopaedics</option>
-        <option>Paediatrics</option><option>Pathology</option><option>Pharmacology</option>
-        <option>Physiology</option><option>Psychiatry</option><option>Radiology</option><option>Other</option>
+        <option value="">— Select Department / College —</option>
+        <optgroup label="Dental College">
+          <option value="Dental - Conservative Dentistry">Conservative Dentistry &amp; Endodontics</option>
+          <option value="Dental - Oral Medicine">Oral Medicine &amp; Radiology</option>
+          <option value="Dental - Oral Pathology">Oral Pathology &amp; Microbiology</option>
+          <option value="Dental - Oral Surgery">Oral &amp; Maxillofacial Surgery</option>
+          <option value="Dental - Orthodontics">Orthodontics &amp; Dentofacial Orthopaedics</option>
+          <option value="Dental - Paediatric Dentistry">Paediatric &amp; Preventive Dentistry</option>
+          <option value="Dental - Periodontics">Periodontics</option>
+          <option value="Dental - Prosthodontics">Prosthodontics &amp; Crown &amp; Bridge</option>
+          <option value="Dental - Public Health Dentistry">Public Health Dentistry</option>
+        </optgroup>
+        <optgroup label="Medical College">
+          <option value="Medical - Anatomy">Anatomy</option>
+          <option value="Medical - Biochemistry">Biochemistry</option>
+          <option value="Medical - Community Medicine">Community Medicine</option>
+          <option value="Medical - Dermatology">Dermatology</option>
+          <option value="Medical - ENT">ENT</option>
+          <option value="Medical - Forensic Medicine">Forensic Medicine</option>
+          <option value="Medical - General Medicine">General Medicine</option>
+          <option value="Medical - General Surgery">General Surgery</option>
+          <option value="Medical - Microbiology">Microbiology</option>
+          <option value="Medical - Obs & Gynaecology">Obstetrics &amp; Gynaecology</option>
+          <option value="Medical - Ophthalmology">Ophthalmology</option>
+          <option value="Medical - Orthopaedics">Orthopaedics</option>
+          <option value="Medical - Paediatrics">Paediatrics</option>
+          <option value="Medical - Pathology">Pathology</option>
+          <option value="Medical - Pharmacology">Pharmacology</option>
+          <option value="Medical - Physiology">Physiology</option>
+          <option value="Medical - Psychiatry">Psychiatry</option>
+          <option value="Medical - Radiology">Radiology</option>
+        </optgroup>
+        <optgroup label="Allied Health Sciences">
+          <option value="Allied - Medical Lab Technology">Medical Lab Technology</option>
+          <option value="Allied - Physiotherapy">Physiotherapy</option>
+          <option value="Allied - Nursing">Nursing</option>
+          <option value="Allied - Pharmacy">Pharmacy</option>
+          <option value="Allied - Nutrition & Dietetics">Nutrition &amp; Dietetics</option>
+          <option value="Allied - Optometry">Optometry</option>
+          <option value="Allied - Radiography">Radiography &amp; Imaging Technology</option>
+          <option value="Allied - Other">Other Allied Health</option>
+        </optgroup>
+        <optgroup label="Research Facility">
+          <option value="Research - Biomedical">Biomedical Research</option>
+          <option value="Research - Clinical Trials">Clinical Trials Unit</option>
+          <option value="Research - Genomics">Genomics &amp; Molecular Biology</option>
+          <option value="Research - Epidemiology">Epidemiology &amp; Public Health Research</option>
+          <option value="Research - Other">Other Research Division</option>
+        </optgroup>
+        <option value="Other">Other</option>
       </select>
     </div>
+  </div>
+
+  <!-- ② TYPE OF PUBLICATION -->
+  <div class="card">
+    <div class="section-hd">Type of Publication</div>
+    <div class="fld"><label class="lbl req">Publication Type</label>
+      <select id="f-pubtype" onchange="onPubTypeChange()">
+        <option value="">— Select Publication Type —</option>
+        <option value="Original Article">Original Article</option>
+        <option value="Review Article">Review Article</option>
+        <option value="Meta Analysis">Meta Analysis</option>
+        <option value="Book">Book</option>
+        <option value="Book Chapter">Book Chapter</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ② AUTHOR LIST (ordered as they appear in article) -->
+  <div class="card">
+    <div class="section-hd">Author List <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">— arrange in order as they appear in the publication</span></div>
+    <div style="font-size:.78rem;color:#5a5a7a;margin-bottom:.8rem">Add each author, then drag &amp; drop to reorder. The order here will be the published author order.</div>
+    <div id="author-list-container"></div>
+    <div class="author-add-row">
+      <input id="new-author-input" placeholder="Author name (e.g. Sharma RK)" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();addAuthor();}">
+      <button class="btn-dk" type="button" onclick="addAuthor()" style="white-space:nowrap">+ Add Author</button>
+    </div>
+    <div style="font-size:.75rem;color:#5a5a7a;margin-top:.4rem">First author listed will be treated as primary author in records.</div>
+  </div>
+
+  <!-- ARTICLE DETAILS — shown for Original Article / Review Article / Meta Analysis -->
+  <div class="card" id="section-article" style="display:none">
+    <div class="section-hd">Article Details</div>
     <div class="fld"><label class="lbl req">Title of Research Article</label>
       <textarea id="f-title" rows="2" placeholder="Enter full article title..."></textarea>
     </div>
-    <div class="fld"><label class="lbl req">Authors <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem">(comma separated)</span></label>
-      <input id="f-authors" placeholder="e.g. Sharma RK, Gupta M, Patel S">
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="section-hd">Corresponding Author Details</div>
-    <div class="g2">
-      <div class="fld"><label class="lbl req">Name</label><input id="f-caname" placeholder="Full name"></div>
-      <div class="fld"><label class="lbl req">Email</label><input id="f-caemail" type="email" placeholder="email@institution.ac.in"></div>
-    </div>
-    <div class="fld"><label class="lbl">Affiliation / Institution</label>
-      <input id="f-caaff" placeholder="Department, Institution, City">
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-hd">Journal Details</div>
-    <div class="fld"><label class="lbl req">Journal Name</label>
-      <input id="f-journal" placeholder="e.g. Indian Journal of Medical Research">
-    </div>
-    <div class="g3">
-      <div class="fld"><label class="lbl">Volume</label><input id="f-vol" placeholder="e.g. 45"></div>
-      <div class="fld"><label class="lbl">Issue / Sub-Volume</label><input id="f-issue" placeholder="e.g. 3"></div>
-      <div class="fld"><label class="lbl">Impact Factor</label><input id="f-if" placeholder="e.g. 4.25"></div>
-    </div>
-    <div class="g3">
-      <div class="fld"><label class="lbl">Page From</label><input id="f-pg1" placeholder="101"></div>
-      <div class="fld"><label class="lbl">Page To</label><input id="f-pg2" placeholder="108"></div>
-      <div class="fld"><label class="lbl">DOI</label><input id="f-doi" placeholder="10.xxxx/xxxxxx" style="font-family:'Courier New',monospace;font-size:.8rem"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-hd">Quartile &amp; Indexing</div>
-    <div style="margin-bottom:1.2rem">
-      <label class="lbl req" style="margin-bottom:.5rem">Quartile</label>
-      <div id="q-chips">
-        <span class="chip" onclick="selQ(this,'Q1')">Q1</span>
-        <span class="chip" onclick="selQ(this,'Q2')">Q2</span>
-        <span class="chip" onclick="selQ(this,'Q3')">Q3</span>
-        <span class="chip" onclick="selQ(this,'Q4')">Q4</span>
+    <!-- Corresponding Author Details -->
+    <div class="pub-details-section">
+      <div class="section-hd" style="font-size:.62rem">Corresponding Author Details</div>
+      <div class="g2">
+        <div class="fld"><label class="lbl req">Name</label><input id="f-caname" placeholder="Full name"></div>
+        <div class="fld"><label class="lbl req">Email</label><input id="f-caemail" type="email" placeholder="email@institution.ac.in"></div>
+      </div>
+      <div class="fld"><label class="lbl">Affiliation / Institution</label>
+        <input id="f-caaff" placeholder="Department, Institution, City">
       </div>
     </div>
-    <div>
-      <label class="lbl req" style="margin-bottom:.5rem">Indexing</label>
-      <div id="idx-chips">
-        <span class="chip" onclick="togIdx(this,'Scopus')">Scopus</span>
-        <span class="chip" onclick="togIdx(this,'PubMed')">PubMed</span>
-        <span class="chip" onclick="togIdx(this,'WoS')">WoS</span>
-        <span class="chip" onclick="togIdx(this,'None')">None</span>
+
+    <!-- Journal Details -->
+    <div class="pub-details-section">
+      <div class="section-hd" style="font-size:.62rem">Journal Details</div>
+      <div class="g2">
+        <div class="fld"><label class="lbl req">Journal Name</label>
+          <input id="f-journal" placeholder="e.g. Indian Journal of Medical Research">
+        </div>
+        <div class="fld"><label class="lbl">ISSN No.</label>
+          <input id="f-issn" placeholder="e.g. 0971-5916" style="font-family:'Courier New',monospace;font-size:.85rem">
+        </div>
+      </div>
+      <div class="g4">
+        <div class="fld"><label class="lbl">Volume</label><input id="f-vol" placeholder="e.g. 45"></div>
+        <div class="fld"><label class="lbl">Issue</label><input id="f-issue" placeholder="e.g. 3"></div>
+        <div class="fld"><label class="lbl">Page From</label><input id="f-pg1" placeholder="101"></div>
+        <div class="fld"><label class="lbl">Page To</label><input id="f-pg2" placeholder="108"></div>
+      </div>
+      <div class="g3">
+        <div class="fld"><label class="lbl">Impact Factor</label><input id="f-if" placeholder="e.g. 4.25"></div>
+        <div class="fld"><label class="lbl">Year of Publication</label><input id="f-year" placeholder="e.g. 2024" maxlength="4"></div>
+        <div class="fld"><label class="lbl">DOI</label><input id="f-doi" placeholder="10.xxxx/xxxxxx" style="font-family:'Courier New',monospace;font-size:.8rem"></div>
+      </div>
+    </div>
+
+    <!-- Quartile & Indexing -->
+    <div class="pub-details-section">
+      <div class="section-hd" style="font-size:.62rem">Quartile &amp; Indexing</div>
+      <div style="margin-bottom:1.2rem">
+        <label class="lbl req" style="margin-bottom:.5rem">Quartile</label>
+        <div id="q-chips">
+          <span class="chip" onclick="selQ(this,'Q1')">Q1</span>
+          <span class="chip" onclick="selQ(this,'Q2')">Q2</span>
+          <span class="chip" onclick="selQ(this,'Q3')">Q3</span>
+          <span class="chip" onclick="selQ(this,'Q4')">Q4</span>
+        </div>
+      </div>
+      <div>
+        <label class="lbl req" style="margin-bottom:.5rem">Indexing</label>
+        <div id="idx-chips">
+          <span class="chip" onclick="togIdx(this,'Scopus')">Scopus</span>
+          <span class="chip" onclick="togIdx(this,'PubMed')">PubMed</span>
+          <span class="chip" onclick="togIdx(this,'WoS')">WoS</span>
+          <span class="chip" onclick="togIdx(this,'None')">None</span>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- BOOK DETAILS — shown for Book or Book Chapter -->
+  <div class="card" id="section-book" style="display:none">
+    <div class="section-hd">Book / Chapter Details</div>
+    <div id="book-chapter-title-fld" class="fld" style="display:none">
+      <label class="lbl req">Title of Chapter</label>
+      <textarea id="f-chapter-title" rows="2" placeholder="Enter full chapter title..."></textarea>
+    </div>
+    <div class="fld"><label class="lbl req">Title of Book</label>
+      <textarea id="f-book-title" rows="2" placeholder="Enter full book title..."></textarea>
+    </div>
+    <div class="fld"><label class="lbl req">Author List (as on book)</label>
+      <input id="f-book-authors" placeholder="e.g. Sharma RK, Gupta M, Patel S">
+    </div>
+    <div class="g3">
+      <div class="fld"><label class="lbl req">ISBN No.</label>
+        <input id="f-isbn" placeholder="e.g. 978-3-16-148410-0" style="font-family:'Courier New',monospace;font-size:.85rem">
+      </div>
+      <div class="fld"><label class="lbl req">Publisher</label>
+        <input id="f-publisher" placeholder="e.g. Elsevier">
+      </div>
+      <div class="fld"><label class="lbl">Year of Publication</label>
+        <input id="f-book-year" placeholder="e.g. 2024" maxlength="4">
+      </div>
+    </div>
+  </div>
+
+  <!-- SDG GOALS -->
   <div class="card">
-    <div class="section-hd">Document Upload <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">(optional — link will be stored)</span></div>
+    <div class="section-hd">SDG Goal Alignment <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">(select all that apply)</span></div>
+    <div style="font-size:.78rem;color:#5a5a7a;margin-bottom:.8rem">Click on the SDG goal(s) that your publication aligns with.</div>
+    <div class="sdg-grid" id="sdg-grid"></div>
+    <div id="sdg-selected-label" style="font-size:.78rem;color:#1a2744;margin-top:.6rem;font-weight:700"></div>
+  </div>
+
+  <!-- DOCUMENT UPLOAD -->
+  <div class="card">
+    <div class="section-hd">Document Upload <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">(optional)</span></div>
     <div class="upload-z" id="upload-zone" onclick="document.getElementById('file-inp').click()">
       <input type="file" id="file-inp" style="display:none" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="handleFile(this)">
       <div id="upload-txt">
@@ -258,15 +390,66 @@ a{color:#c8102e}
     </div>
   </div>
   <div class="filter-row">
-    <input id="f-search" placeholder="Search title, author, journal..." oninput="renderRecords()">
+    <input id="f-search" placeholder="Search title, author, journal, impact factor..." oninput="renderRecords()">
     <select id="f-fdept" onchange="renderRecords()">
       <option value="">All Departments</option>
-      <option>Anatomy</option><option>Biochemistry</option><option>Community Medicine</option>
-      <option>Dermatology</option><option>ENT</option><option>Forensic Medicine</option>
-      <option>General Medicine</option><option>General Surgery</option><option>Microbiology</option>
-      <option>Obstetrics & Gynaecology</option><option>Ophthalmology</option><option>Orthopaedics</option>
-      <option>Paediatrics</option><option>Pathology</option><option>Pharmacology</option>
-      <option>Physiology</option><option>Psychiatry</option><option>Radiology</option><option>Other</option>
+      <optgroup label="Dental College">
+        <option value="Dental - Conservative Dentistry">Conservative Dentistry</option>
+        <option value="Dental - Oral Medicine">Oral Medicine</option>
+        <option value="Dental - Oral Pathology">Oral Pathology</option>
+        <option value="Dental - Oral Surgery">Oral Surgery</option>
+        <option value="Dental - Orthodontics">Orthodontics</option>
+        <option value="Dental - Paediatric Dentistry">Paediatric Dentistry</option>
+        <option value="Dental - Periodontics">Periodontics</option>
+        <option value="Dental - Prosthodontics">Prosthodontics</option>
+        <option value="Dental - Public Health Dentistry">Public Health Dentistry</option>
+      </optgroup>
+      <optgroup label="Medical College">
+        <option value="Medical - Anatomy">Anatomy</option>
+        <option value="Medical - Biochemistry">Biochemistry</option>
+        <option value="Medical - Community Medicine">Community Medicine</option>
+        <option value="Medical - Dermatology">Dermatology</option>
+        <option value="Medical - ENT">ENT</option>
+        <option value="Medical - Forensic Medicine">Forensic Medicine</option>
+        <option value="Medical - General Medicine">General Medicine</option>
+        <option value="Medical - General Surgery">General Surgery</option>
+        <option value="Medical - Microbiology">Microbiology</option>
+        <option value="Medical - Obs & Gynaecology">Obstetrics &amp; Gynaecology</option>
+        <option value="Medical - Ophthalmology">Ophthalmology</option>
+        <option value="Medical - Orthopaedics">Orthopaedics</option>
+        <option value="Medical - Paediatrics">Paediatrics</option>
+        <option value="Medical - Pathology">Pathology</option>
+        <option value="Medical - Pharmacology">Pharmacology</option>
+        <option value="Medical - Physiology">Physiology</option>
+        <option value="Medical - Psychiatry">Psychiatry</option>
+        <option value="Medical - Radiology">Radiology</option>
+      </optgroup>
+      <optgroup label="Allied Health Sciences">
+        <option value="Allied - Medical Lab Technology">Medical Lab Technology</option>
+        <option value="Allied - Physiotherapy">Physiotherapy</option>
+        <option value="Allied - Nursing">Nursing</option>
+        <option value="Allied - Pharmacy">Pharmacy</option>
+        <option value="Allied - Nutrition & Dietetics">Nutrition &amp; Dietetics</option>
+        <option value="Allied - Optometry">Optometry</option>
+        <option value="Allied - Radiography">Radiography</option>
+        <option value="Allied - Other">Other Allied Health</option>
+      </optgroup>
+      <optgroup label="Research Facility">
+        <option value="Research - Biomedical">Biomedical Research</option>
+        <option value="Research - Clinical Trials">Clinical Trials</option>
+        <option value="Research - Genomics">Genomics</option>
+        <option value="Research - Epidemiology">Epidemiology</option>
+        <option value="Research - Other">Other Research</option>
+      </optgroup>
+      <option value="Other">Other</option>
+    </select>
+    <select id="f-fpubtype" onchange="renderRecords()">
+      <option value="">All Types</option>
+      <option>Original Article</option>
+      <option>Review Article</option>
+      <option>Meta Analysis</option>
+      <option>Book</option>
+      <option>Book Chapter</option>
     </select>
     <select id="f-fq" onchange="renderRecords()">
       <option value="">All Quartiles</option>
@@ -277,6 +460,12 @@ a{color:#c8102e}
       <option>Scopus</option><option>PubMed</option><option>WoS</option><option>None</option>
     </select>
   </div>
+  <!-- Year + Impact Factor search row -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-bottom:1.2rem">
+    <input id="f-fyear" placeholder="Filter by year (e.g. 2024)" oninput="renderRecords()">
+    <input id="f-fif-min" placeholder="Impact Factor min (e.g. 2.0)" type="number" step="0.1" min="0" oninput="renderRecords()">
+    <input id="f-fif-max" placeholder="Impact Factor max (e.g. 10.0)" type="number" step="0.1" min="0" oninput="renderRecords()">
+  </div>
   <div id="records-list"><div class="loading" style="padding:2rem">Loading records from Google Sheets...</div></div>
 </div>
 
@@ -284,15 +473,11 @@ a{color:#c8102e}
 
 <script>
 // ═══════════════════════════════════════════════
-// CONFIGURATION — EDIT THESE AFTER SETUP
+// CONFIGURATION
 // ═══════════════════════════════════════════════
 var CONFIG = {
-  // Paste your Google Apps Script Web App URL here after deployment
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzku-3mupSLaezYHmKrRmnHh0d4r-I-EyQpT7wcKmidrD43ONJSu0guTFfgs1dk5J934g/exec",
-  // Admin password for Excel download (change this!)
-  // ONE master password — same for all users who want to download Excel
   ADMIN_PASSWORD: "Research@2024",
-  // Auto-refresh records every N seconds (0 to disable)
   AUTO_REFRESH: 30
 };
 // ═══════════════════════════════════════════════
@@ -300,12 +485,37 @@ var CONFIG = {
 var allRecords = [];
 var selQuartile = '';
 var selIdx = [];
+var selSdgGoals = [];
 var uploadedFile = null;
 var uploadedName = '';
+var authorList = []; // ordered author array
 var refreshTimer = null;
+
+// ── SDG DATA ──
+var SDG_GOALS = [
+  {num:1,  label:'No Poverty',                    color:'#e5243b'},
+  {num:2,  label:'Zero Hunger',                   color:'#dda63a'},
+  {num:3,  label:'Good Health & Well-being',      color:'#4c9f38'},
+  {num:4,  label:'Quality Education',             color:'#c5192d'},
+  {num:5,  label:'Gender Equality',               color:'#ff3a21'},
+  {num:6,  label:'Clean Water & Sanitation',      color:'#26bde2'},
+  {num:7,  label:'Affordable & Clean Energy',     color:'#fcc30b'},
+  {num:8,  label:'Decent Work & Economic Growth', color:'#a21942'},
+  {num:9,  label:'Industry, Innovation & Infrastructure', color:'#fd6925'},
+  {num:10, label:'Reduced Inequalities',          color:'#dd1367'},
+  {num:11, label:'Sustainable Cities & Communities', color:'#fd9d24'},
+  {num:12, label:'Responsible Consumption & Production', color:'#bf8b2e'},
+  {num:13, label:'Climate Action',                color:'#3f7e44'},
+  {num:14, label:'Life Below Water',              color:'#0a97d9'},
+  {num:15, label:'Life on Land',                  color:'#56c02b'},
+  {num:16, label:'Peace, Justice & Strong Institutions', color:'#00689d'},
+  {num:17, label:'Partnerships for the Goals',   color:'#19486a'}
+];
 
 // ── INIT ──
 window.onload = function() {
+  buildSdgGrid();
+  renderAuthorList();
   checkConnection();
   loadRecords();
   if (CONFIG.AUTO_REFRESH > 0) {
@@ -318,10 +528,98 @@ window.onload = function() {
   }
 };
 
+// ── SDG GRID BUILDER ──
+function buildSdgGrid() {
+  var grid = document.getElementById('sdg-grid');
+  grid.innerHTML = SDG_GOALS.map(function(g) {
+    var short = g.label.length > 22 ? g.label.substring(0,20)+'…' : g.label;
+    return '<div class="sdg-item" id="sdg-item-'+g.num+'" onclick="toggleSdg('+g.num+')" title="SDG '+g.num+': '+g.label+'">' +
+      '<div class="sdg-box" style="background:'+g.color+'">' +
+      '<span class="sdg-num">'+g.num+'</span>' +
+      '<span style="font-size:.5rem;line-height:1.1">'+short+'</span>' +
+      '</div></div>';
+  }).join('');
+}
+
+function toggleSdg(num) {
+  var i = selSdgGoals.indexOf(num);
+  var el = document.getElementById('sdg-item-'+num);
+  if (i > -1) {
+    selSdgGoals.splice(i,1);
+    el.classList.remove('on');
+  } else {
+    selSdgGoals.push(num);
+    el.classList.add('on');
+  }
+  selSdgGoals.sort(function(a,b){return a-b;});
+  var lbl = document.getElementById('sdg-selected-label');
+  lbl.textContent = selSdgGoals.length
+    ? 'Selected: SDG ' + selSdgGoals.join(', ')
+    : '';
+}
+
+// ── PUBLICATION TYPE TOGGLE ──
+function onPubTypeChange() {
+  var type = document.getElementById('f-pubtype').value;
+  var isArticle = ['Original Article','Review Article','Meta Analysis'].indexOf(type) > -1;
+  var isBook = ['Book','Book Chapter'].indexOf(type) > -1;
+  var isChapter = type === 'Book Chapter';
+
+  document.getElementById('section-article').style.display = isArticle ? '' : 'none';
+  document.getElementById('section-book').style.display = isBook ? '' : 'none';
+  document.getElementById('book-chapter-title-fld').style.display = isChapter ? '' : 'none';
+}
+
+// ── AUTHOR LIST ──
+function renderAuthorList() {
+  var container = document.getElementById('author-list-container');
+  if (!authorList.length) {
+    container.innerHTML = '<div style="color:#5a5a7a;font-size:.82rem;font-style:italic;margin-bottom:.5rem">No authors added yet.</div>';
+    return;
+  }
+  container.innerHTML = authorList.map(function(name, idx) {
+    return '<div class="author-row" draggable="true" data-idx="'+idx+'" ' +
+      'ondragstart="dragStart(event,'+idx+')" ondragover="dragOver(event)" ondrop="dragDrop(event,'+idx+')">' +
+      '<span class="author-drag-handle">⠿</span>' +
+      '<span style="flex:1;font-size:.88rem">' +
+        '<strong style="color:#c8102e;font-family:Courier New,monospace;font-size:.78rem;margin-right:.5rem">'+(idx+1)+'.</strong>' +
+        esc(name) +
+      '</span>' +
+      '<button onclick="removeAuthor('+idx+')" style="background:none;border:none;cursor:pointer;color:#c8102e;font-size:1rem;padding:0 .2rem" title="Remove">✕</button>' +
+      '</div>';
+  }).join('');
+}
+
+function addAuthor() {
+  var inp = document.getElementById('new-author-input');
+  var name = inp.value.trim();
+  if (!name) return;
+  authorList.push(name);
+  inp.value = '';
+  renderAuthorList();
+}
+
+function removeAuthor(idx) {
+  authorList.splice(idx, 1);
+  renderAuthorList();
+}
+
+var dragSrcIdx = null;
+function dragStart(e, idx) { dragSrcIdx = idx; e.dataTransfer.effectAllowed = 'move'; }
+function dragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+function dragDrop(e, targetIdx) {
+  e.preventDefault();
+  if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+  var moved = authorList.splice(dragSrcIdx, 1)[0];
+  authorList.splice(targetIdx, 0, moved);
+  dragSrcIdx = null;
+  renderAuthorList();
+}
+
+// ── CONNECTION ──
 function checkConnection() {
   if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    setConn('not-configured');
-    return;
+    setConn('not-configured'); return;
   }
   setConn('connecting');
   fetch(CONFIG.APPS_SCRIPT_URL + '?action=ping', {mode:'no-cors'})
@@ -380,8 +678,9 @@ function loadRecords() {
 
 function getSampleData() {
   return [
-    {id:'demo1',department:'General Medicine',title:'A Study on Hypertension Management in Rural India',authors:'Sharma RK, Gupta M',correspondingAuthor:'Dr. R.K. Sharma',correspondingEmail:'rksharma@med.ac.in',correspondingAffiliation:'Dept of Medicine, AIIMS',journalName:'Indian Journal of Medical Research',volume:'45',issue:'3',pageFrom:'101',pageTo:'108',doi:'10.1234/ijmr.2024.001',impactFactor:'4.2',quartile:'Q1',indexing:['Scopus','PubMed'],submittedAt:'Sample Data'},
-    {id:'demo2',department:'Pathology',title:'Histopathological Analysis of Breast Carcinoma Subtypes',authors:'Patel S, Singh A, Kumar R',correspondingAuthor:'Dr. S. Patel',correspondingEmail:'spatel@path.ac.in',correspondingAffiliation:'Dept of Pathology',journalName:'Histopathology Journal',volume:'12',issue:'1',pageFrom:'55',pageTo:'62',doi:'10.5678/hj.2024.042',impactFactor:'3.1',quartile:'Q2',indexing:['WoS'],submittedAt:'Sample Data'}
+    {id:'demo1',department:'Medical - General Medicine',pubType:'Original Article',title:'A Study on Hypertension Management in Rural India',authors:'Sharma RK, Gupta M',correspondingAuthor:'Dr. R.K. Sharma',correspondingEmail:'rksharma@med.ac.in',correspondingAffiliation:'Dept of Medicine, AIIMS',journalName:'Indian Journal of Medical Research',issn:'0971-5916',volume:'45',issue:'3',pageFrom:'101',pageTo:'108',doi:'10.1234/ijmr.2024.001',impactFactor:'4.2',year:'2024',quartile:'Q1',indexing:['Scopus','PubMed'],sdgGoals:'3, 10',submittedAt:'Sample Data'},
+    {id:'demo2',department:'Medical - Pathology',pubType:'Review Article',title:'Histopathological Analysis of Breast Carcinoma Subtypes',authors:'Patel S, Singh A, Kumar R',correspondingAuthor:'Dr. S. Patel',correspondingEmail:'spatel@path.ac.in',correspondingAffiliation:'Dept of Pathology',journalName:'Histopathology Journal',issn:'0309-0167',volume:'12',issue:'1',pageFrom:'55',pageTo:'62',doi:'10.5678/hj.2024.042',impactFactor:'3.1',year:'2024',quartile:'Q2',indexing:['WoS'],sdgGoals:'3',submittedAt:'Sample Data'},
+    {id:'demo3',department:'Dental - Oral Pathology',pubType:'Book Chapter',title:'',bookChapterTitle:'Oral Mucosal Diseases — Diagnostic Criteria',bookTitle:'Comprehensive Oral Pathology Textbook',bookAuthors:'Mehta A, Reddy VK',isbn:'978-81-312-1234-5',publisher:'Jaypee Brothers',bookYear:'2023',sdgGoals:'3, 4',submittedAt:'Sample Data'}
   ];
 }
 
@@ -389,15 +688,25 @@ function getSampleData() {
 function renderRecords() {
   var s = (document.getElementById('f-search').value || '').toLowerCase();
   var d = document.getElementById('f-fdept').value;
+  var pt = document.getElementById('f-fpubtype').value;
   var q = document.getElementById('f-fq').value;
   var idx = document.getElementById('f-fidx').value;
+  var yr = (document.getElementById('f-fyear').value || '').trim();
+  var ifMin = parseFloat(document.getElementById('f-fif-min').value) || null;
+  var ifMax = parseFloat(document.getElementById('f-fif-max').value) || null;
 
   var filtered = allRecords.filter(function(p) {
-    var ms = !s || (p.title+p.authors+p.journalName+p.department).toLowerCase().includes(s);
+    var searchStr = (p.title||'')+(p.bookTitle||'')+(p.bookChapterTitle||'')+(p.authors||'')+(p.bookAuthors||'')+(p.journalName||'')+(p.department||'')+(p.impactFactor||'')+(p.issn||'')+(p.isbn||'');
+    var ms = !s || searchStr.toLowerCase().includes(s);
     var md = !d || p.department === d;
+    var mpt = !pt || p.pubType === pt;
     var mq = !q || p.quartile === q;
     var mi = !idx || (p.indexing && (Array.isArray(p.indexing) ? p.indexing.includes(idx) : p.indexing.indexOf(idx) > -1));
-    return ms && md && mq && mi;
+    var myr = !yr || (p.year||'').includes(yr) || (p.bookYear||'').includes(yr);
+    var pIF = parseFloat(p.impactFactor) || null;
+    var mifMin = !ifMin || (pIF && pIF >= ifMin);
+    var mifMax = !ifMax || (pIF && pIF <= ifMax);
+    return ms && md && mpt && mq && mi && myr && mifMin && mifMax;
   });
 
   var el = document.getElementById('records-list');
@@ -412,28 +721,62 @@ function renderRecords() {
   }
 
   el.innerHTML = filtered.map(function(p) {
+    var isArticle = ['Original Article','Review Article','Meta Analysis'].indexOf(p.pubType) > -1;
+    var isBook = ['Book','Book Chapter'].indexOf(p.pubType) > -1;
     var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing || '').split(',').map(function(x){return x.trim();});
     var qc = {Q1:'q1',Q2:'q2',Q3:'q3',Q4:'q4'}[p.quartile] || '';
-    var pages = p.pageFrom && p.pageTo ? ' pp. ' + p.pageFrom + '–' + p.pageTo : '';
-    var vol = p.volume ? ', Vol. ' + p.volume + (p.issue ? '(' + p.issue + ')' : '') : '';
+    var ptBadge = p.pubType ? '<span class="badge" style="background:#ede9fe;color:#5b21b6">'+esc(p.pubType)+'</span>' : '';
+
+    var titleHtml = '';
+    if (p.pubType === 'Book Chapter') {
+      titleHtml = '<div class="pub-title">'+esc(p.bookChapterTitle || p.title)+'</div>' +
+        '<div style="font-size:.83rem;color:#5a5a7a;margin-bottom:.2rem">In: <em>'+esc(p.bookTitle)+'</em></div>';
+    } else if (p.pubType === 'Book') {
+      titleHtml = '<div class="pub-title">'+esc(p.bookTitle || p.title)+'</div>';
+    } else {
+      titleHtml = '<div class="pub-title">'+esc(p.title)+'</div>';
+    }
+
+    var metaHtml = '';
+    if (isArticle) {
+      var pages = p.pageFrom && p.pageTo ? ' pp. '+p.pageFrom+'–'+p.pageTo : '';
+      var vol = p.volume ? ', Vol. '+p.volume+(p.issue ? '('+p.issue+')' : '') : '';
+      var yrStr = p.year ? ' ('+p.year+')' : '';
+      metaHtml = '<div style="font-size:.83rem;margin-bottom:.35rem"><em>'+esc(p.journalName)+'</em>'+vol+pages+yrStr+'</div>';
+      if (p.issn) metaHtml += '<div style="font-size:.75rem;color:#5a5a7a;margin-bottom:.2rem">ISSN: '+esc(p.issn)+'</div>';
+      if (p.doi) metaHtml += '<div style="font-family:Courier New,monospace;font-size:.75rem;color:#c8102e;margin-bottom:.4rem">DOI: <a href="https://doi.org/'+esc(p.doi)+'" target="_blank">'+esc(p.doi)+'</a></div>';
+    } else if (isBook) {
+      var authors = p.bookAuthors || p.authors;
+      metaHtml = '<div class="pub-meta">'+esc(authors)+'</div>';
+      if (p.publisher) metaHtml += '<div style="font-size:.83rem;margin-bottom:.2rem">Publisher: <em>'+esc(p.publisher)+'</em>'+(p.bookYear ? ' ('+esc(p.bookYear)+')' : '')+'</div>';
+      if (p.isbn) metaHtml += '<div style="font-family:Courier New,monospace;font-size:.75rem;color:#5a5a7a;margin-bottom:.3rem">ISBN: '+esc(p.isbn)+'</div>';
+    }
+
+    var authorMeta = isArticle ? '<div class="pub-meta">'+esc(p.authors)+'</div>' : '';
+    var sdgStr = p.sdgGoals ? '<span style="font-size:.7rem;background:#e0f2fe;color:#075985;padding:.15rem .5rem;border-radius:3px;font-weight:700;margin:.1rem">🌍 SDG: '+esc(p.sdgGoals)+'</span>' : '';
+
+    var correspondingHtml = '';
+    if (isArticle && p.correspondingAuthor) {
+      correspondingHtml = '<div style="border-top:1px solid #d4c9b0;margin-top:.7rem;padding-top:.6rem;font-size:.78rem;color:#5a5a7a">' +
+        '<strong>Corresponding:</strong> '+esc(p.correspondingAuthor)+' — '+esc(p.correspondingEmail)+
+        (p.correspondingAffiliation ? ' | '+esc(p.correspondingAffiliation) : '')+'</div>';
+    }
+
     return '<div class="card card-accent" style="margin-bottom:.9rem">' +
       '<div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">' +
       '<div style="flex:1">' +
-      '<div class="pub-title">' + esc(p.title) + '</div>' +
-      '<div class="pub-meta">' + esc(p.authors) + '</div>' +
-      '<div style="font-size:.83rem;margin-bottom:.45rem"><em>' + esc(p.journalName) + '</em>' + vol + pages + '</div>' +
-      (p.doi ? '<div style="font-family:Courier New,monospace;font-size:.75rem;color:#c8102e;margin-bottom:.4rem">DOI: <a href="https://doi.org/' + esc(p.doi) + '" target="_blank">' + esc(p.doi) + '</a></div>' : '') +
+      titleHtml + authorMeta + metaHtml +
       '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center">' +
-      '<span style="font-size:.7rem;background:#e9ecef;padding:.15rem .5rem;border-radius:3px;font-weight:700">' + esc(p.department) + '</span>' +
-      '<span class="badge ' + qc + '">' + esc(p.quartile) + '</span>' +
-      (p.impactFactor ? '<span class="badge" style="background:#fff7ed;color:#9a3412">IF: ' + esc(p.impactFactor) + '</span>' : '') +
-      idxArr.map(function(i){return '<span class="badge bidx">' + esc(i) + '</span>';}).join('') +
+      '<span style="font-size:.7rem;background:#e9ecef;padding:.15rem .5rem;border-radius:3px;font-weight:700">'+esc(p.department)+'</span>' +
+      ptBadge +
+      (p.quartile ? '<span class="badge '+qc+'">'+esc(p.quartile)+'</span>' : '') +
+      (p.impactFactor ? '<span class="badge" style="background:#fff7ed;color:#9a3412">IF: '+esc(p.impactFactor)+'</span>' : '') +
+      idxArr.filter(Boolean).map(function(i){return '<span class="badge bidx">'+esc(i)+'</span>';}).join('') +
+      sdgStr +
       '</div></div>' +
-      '<div style="font-size:.72rem;color:#5a5a7a;text-align:right;min-width:90px">' + esc(p.submittedAt||'') + '</div>' +
+      '<div style="font-size:.72rem;color:#5a5a7a;text-align:right;min-width:90px">'+esc(p.submittedAt||'')+'</div>' +
       '</div>' +
-      '<div style="border-top:1px solid #d4c9b0;margin-top:.7rem;padding-top:.6rem;font-size:.78rem;color:#5a5a7a">' +
-      '<strong>Corresponding:</strong> ' + esc(p.correspondingAuthor) + ' — ' + esc(p.correspondingEmail) +
-      (p.correspondingAffiliation ? ' | ' + esc(p.correspondingAffiliation) : '') + '</div>' +
+      correspondingHtml +
       '</div>';
   }).join('');
 }
@@ -463,12 +806,16 @@ function updateStats() {
     recent.map(function(p) {
       var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',').map(function(x){return x.trim();});
       var qc = {Q1:'q1',Q2:'q2',Q3:'q3',Q4:'q4'}[p.quartile]||'';
+      var displayTitle = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||p.title) : (p.bookTitle||p.title||'Untitled');
       return '<div class="card card-accent" style="margin-bottom:.8rem">' +
-        '<div class="pub-title">' + esc(p.title) + '</div>' +
-        '<div class="pub-meta">' + esc(p.authors) + '</div>' +
-        '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center"><em style="font-size:.84rem">' + esc(p.journalName) + '</em>' +
-        '<span class="badge ' + qc + '">' + esc(p.quartile) + '</span>' +
-        idxArr.map(function(i){return '<span class="badge bidx">' + esc(i) + '</span>';}).join('') +
+        '<div class="pub-title">'+esc(displayTitle)+'</div>' +
+        '<div class="pub-meta">'+esc(p.authors||p.bookAuthors)+'</div>' +
+        '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center">' +
+        (p.pubType ? '<span class="badge" style="background:#ede9fe;color:#5b21b6">'+esc(p.pubType)+'</span>' : '') +
+        (p.journalName ? '<em style="font-size:.84rem">'+esc(p.journalName)+'</em>' : '') +
+        (p.publisher ? '<em style="font-size:.84rem">'+esc(p.publisher)+'</em>' : '') +
+        (p.quartile ? '<span class="badge '+qc+'">'+esc(p.quartile)+'</span>' : '') +
+        idxArr.filter(Boolean).map(function(i){return '<span class="badge bidx">'+esc(i)+'</span>';}).join('') +
         '</div></div>';
     }).join('');
 }
@@ -505,45 +852,86 @@ function handleFile(input) {
   document.getElementById('upload-zone').classList.add('has');
   document.getElementById('upload-txt').innerHTML =
     '<div style="font-size:1.2rem;margin-bottom:.3rem">✅</div>' +
-    '<div style="font-weight:600;color:#16a34a">' + f.name + '</div>' +
+    '<div style="font-weight:600;color:#16a34a">'+f.name+'</div>' +
     '<div style="font-size:.75rem;color:#5a5a7a;margin-top:.2rem">Click to replace</div>';
 }
 
 function submitForm() {
   var dept = document.getElementById('f-dept').value;
-  var title = document.getElementById('f-title').value.trim();
-  var authors = document.getElementById('f-authors').value.trim();
-  var caname = document.getElementById('f-caname').value.trim();
-  var caemail = document.getElementById('f-caemail').value.trim();
-  var journal = document.getElementById('f-journal').value.trim();
-  if (!dept||!title||!authors||!caname||!caemail||!journal) {
-    showToast('Please fill in all required fields (*)', '#c8102e'); return;
+  var pubType = document.getElementById('f-pubtype').value;
+  if (!dept) { showToast('Please select a Department / College', '#c8102e'); return; }
+  if (!pubType) { showToast('Please select a Publication Type', '#c8102e'); return; }
+  if (!authorList.length) { showToast('Please add at least one author', '#c8102e'); return; }
+
+  var isArticle = ['Original Article','Review Article','Meta Analysis'].indexOf(pubType) > -1;
+  var isBook = ['Book','Book Chapter'].indexOf(pubType) > -1;
+  var isChapter = pubType === 'Book Chapter';
+
+  var pub = {
+    department: dept,
+    pubType: pubType,
+    authors: authorList.join(', '),
+    sdgGoals: selSdgGoals.length ? 'SDG ' + selSdgGoals.join(', ') : '',
+    fileName: uploadedName,
+    submittedAt: new Date().toLocaleString('en-IN')
+  };
+
+  if (isArticle) {
+    var title = document.getElementById('f-title').value.trim();
+    var caname = document.getElementById('f-caname').value.trim();
+    var caemail = document.getElementById('f-caemail').value.trim();
+    var journal = document.getElementById('f-journal').value.trim();
+    if (!title || !caname || !caemail || !journal) {
+      showToast('Please fill in all required article fields (*)', '#c8102e'); return;
+    }
+    if (!selQuartile) { showToast('Please select a Quartile', '#c8102e'); return; }
+    if (!selIdx.length) { showToast('Please select Indexing', '#c8102e'); return; }
+    Object.assign(pub, {
+      title: title,
+      correspondingAuthor: caname,
+      correspondingEmail: caemail,
+      correspondingAffiliation: document.getElementById('f-caaff').value.trim(),
+      journalName: journal,
+      issn: document.getElementById('f-issn').value.trim(),
+      volume: document.getElementById('f-vol').value.trim(),
+      issue: document.getElementById('f-issue').value.trim(),
+      pageFrom: document.getElementById('f-pg1').value.trim(),
+      pageTo: document.getElementById('f-pg2').value.trim(),
+      doi: document.getElementById('f-doi').value.trim(),
+      impactFactor: document.getElementById('f-if').value.trim(),
+      year: document.getElementById('f-year').value.trim(),
+      quartile: selQuartile,
+      indexing: selIdx.join(',')
+    });
   }
-  if (!selQuartile) { showToast('Please select a Quartile', '#c8102e'); return; }
-  if (!selIdx.length) { showToast('Please select Indexing', '#c8102e'); return; }
+
+  if (isBook) {
+    var bookTitle = document.getElementById('f-book-title').value.trim();
+    var bookAuthors = document.getElementById('f-book-authors').value.trim();
+    var isbn = document.getElementById('f-isbn').value.trim();
+    var publisher = document.getElementById('f-publisher').value.trim();
+    if (!bookTitle || !isbn || !publisher) {
+      showToast('Please fill in Title of Book, ISBN, and Publisher', '#c8102e'); return;
+    }
+    if (isChapter) {
+      var chapterTitle = document.getElementById('f-chapter-title').value.trim();
+      if (!chapterTitle) { showToast('Please enter the Title of Chapter', '#c8102e'); return; }
+      pub.bookChapterTitle = chapterTitle;
+    }
+    Object.assign(pub, {
+      bookTitle: bookTitle,
+      bookAuthors: bookAuthors,
+      isbn: isbn,
+      publisher: publisher,
+      bookYear: document.getElementById('f-book-year').value.trim()
+    });
+  }
 
   var btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = '⏳ Submitting...';
   document.getElementById('submit-status').textContent = 'Sending to Google Sheets...';
 
-  var pub = {
-    department: dept, title: title, authors: authors,
-    correspondingAuthor: caname, correspondingEmail: caemail,
-    correspondingAffiliation: document.getElementById('f-caaff').value.trim(),
-    journalName: journal,
-    volume: document.getElementById('f-vol').value.trim(),
-    issue: document.getElementById('f-issue').value.trim(),
-    pageFrom: document.getElementById('f-pg1').value.trim(),
-    pageTo: document.getElementById('f-pg2').value.trim(),
-    doi: document.getElementById('f-doi').value.trim(),
-    impactFactor: document.getElementById('f-if').value.trim(),
-    quartile: selQuartile, indexing: selIdx.join(','),
-    fileName: uploadedName,
-    submittedAt: new Date().toLocaleString('en-IN')
-  };
-
   if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    // Demo mode: just add locally
     pub.id = 'local_' + Date.now();
     allRecords.unshift(pub);
     finishSubmit(btn, true);
@@ -559,7 +947,7 @@ function submitForm() {
     pub.id = 'pending_' + Date.now();
     allRecords.unshift(pub);
     finishSubmit(btn, true);
-    setTimeout(loadRecords, 2000); // refresh from sheets
+    setTimeout(loadRecords, 2000);
   }).catch(function() {
     finishSubmit(btn, false);
   });
@@ -580,16 +968,25 @@ function finishSubmit(btn, success) {
 }
 
 function resetForm() {
-  ['f-dept','f-vol','f-issue','f-if','f-pg1','f-pg2','f-doi'].forEach(function(id){ document.getElementById(id).value=''; });
-  ['f-title','f-authors','f-caname','f-caemail','f-caaff','f-journal'].forEach(function(id){ document.getElementById(id).value=''; });
-  selQuartile=''; selIdx=[]; uploadedFile=null; uploadedName='';
+  document.getElementById('f-dept').value = '';
+  document.getElementById('f-pubtype').value = '';
+  onPubTypeChange();
+  ['f-title','f-caname','f-caemail','f-caaff','f-journal','f-issn',
+   'f-vol','f-issue','f-if','f-year','f-pg1','f-pg2','f-doi',
+   'f-chapter-title','f-book-title','f-book-authors','f-isbn','f-publisher','f-book-year'
+  ].forEach(function(id){ var el = document.getElementById(id); if(el) el.value=''; });
+  selQuartile=''; selIdx=[]; selSdgGoals=[]; authorList=[];
+  uploadedFile=null; uploadedName='';
   document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on','red');});
+  document.querySelectorAll('.sdg-item').forEach(function(c){c.classList.remove('on');});
+  document.getElementById('sdg-selected-label').textContent = '';
   document.getElementById('upload-zone').classList.remove('has');
   document.getElementById('upload-txt').innerHTML='<div style="font-size:1.5rem;margin-bottom:.3rem">📎</div><div style="font-weight:600;margin-bottom:.2rem">Click to upload file</div><div style="font-size:.78rem;color:#5a5a7a">PDF, Word, or image</div>';
   document.getElementById('file-inp').value='';
+  renderAuthorList();
 }
 
-// ── EXCEL DOWNLOAD (Password Protected) ──
+// ── EXCEL DOWNLOAD ──
 function openPwdModal() { document.getElementById('pwd-modal').classList.add('open'); document.getElementById('admin-pwd-input').focus(); }
 function closePwdModal() { document.getElementById('pwd-modal').classList.remove('open'); document.getElementById('pwd-err').style.display='none'; document.getElementById('admin-pwd-input').value=''; }
 
@@ -608,35 +1005,44 @@ function generateExcel() {
 
   var wb = XLSX.utils.book_new();
 
-  // ── Sheet 1: All Publications ──
-  var headers = ['S.No','Department','Title of Article','Authors','Corresponding Author',
-    'Corresponding Email','Affiliation','Journal Name','Volume','Issue',
-    'Page From','Page To','DOI','Impact Factor','Quartile','Indexing','Submitted Date'];
+  var headers = ['S.No','Department','Publication Type','Title / Chapter Title','Book Title (if applicable)',
+    'Authors','Corresponding Author','Corresponding Email','Affiliation',
+    'Journal Name','ISSN No.','Volume','Issue','Page From','Page To',
+    'ISBN No.','Publisher','DOI','Impact Factor','Year','Quartile','Indexing',
+    'SDG Goals','Submitted Date'];
 
   var rows = allRecords.map(function(p, i) {
-    var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : p.indexing;
-    return [i+1, p.department, p.title, p.authors, p.correspondingAuthor,
-      p.correspondingEmail, p.correspondingAffiliation, p.journalName,
-      p.volume, p.issue, p.pageFrom, p.pageTo, p.doi, p.impactFactor,
-      p.quartile, idxStr, p.submittedAt];
+    var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : (p.indexing||'');
+    var title = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||'') : (p.title || p.bookTitle || '');
+    var bookTitle = p.pubType === 'Book Chapter' ? (p.bookTitle||'') : (p.pubType === 'Book' ? (p.bookTitle||'') : '');
+    return [i+1, p.department, p.pubType, title, bookTitle,
+      p.authors||p.bookAuthors, p.correspondingAuthor, p.correspondingEmail, p.correspondingAffiliation,
+      p.journalName, p.issn, p.volume, p.issue, p.pageFrom, p.pageTo,
+      p.isbn, p.publisher, p.doi, p.impactFactor, p.year||p.bookYear, p.quartile, idxStr,
+      p.sdgGoals, p.submittedAt];
   });
 
   var ws1 = XLSX.utils.aoa_to_sheet([headers].concat(rows));
-
-  // Column widths
   ws1['!cols'] = [
-    {wch:6},{wch:20},{wch:50},{wch:35},{wch:25},
-    {wch:30},{wch:35},{wch:40},{wch:8},{wch:8},
-    {wch:10},{wch:10},{wch:30},{wch:12},{wch:10},{wch:20},{wch:18}
+    {wch:6},{wch:22},{wch:16},{wch:48},{wch:40},
+    {wch:35},{wch:25},{wch:30},{wch:35},
+    {wch:38},{wch:14},{wch:8},{wch:8},{wch:10},{wch:10},
+    {wch:22},{wch:20},{wch:30},{wch:12},{wch:6},{wch:10},{wch:20},
+    {wch:18},{wch:18}
   ];
   XLSX.utils.book_append_sheet(wb, ws1, 'All Publications');
 
-  // ── Sheet 2: Department Summary ──
+  // Dept Summary
   var deptMap = {};
   allRecords.forEach(function(p) {
-    if (!deptMap[p.department]) deptMap[p.department] = {total:0,q1:0,q2:0,q3:0,q4:0,scopus:0,pubmed:0,wos:0};
-    var d = deptMap[p.department];
+    var key = p.department || 'Unknown';
+    if (!deptMap[key]) deptMap[key] = {total:0,article:0,review:0,meta:0,book:0,q1:0,q2:0,q3:0,q4:0,scopus:0,pubmed:0,wos:0};
+    var d = deptMap[key];
     d.total++;
+    if (p.pubType==='Original Article') d.article++;
+    else if (p.pubType==='Review Article') d.review++;
+    else if (p.pubType==='Meta Analysis') d.meta++;
+    else if (p.pubType==='Book'||p.pubType==='Book Chapter') d.book++;
     if (p.quartile==='Q1') d.q1++; else if (p.quartile==='Q2') d.q2++;
     else if (p.quartile==='Q3') d.q3++; else if (p.quartile==='Q4') d.q4++;
     var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',').map(function(x){return x.trim();});
@@ -645,25 +1051,28 @@ function generateExcel() {
     if (idxArr.includes('WoS')) d.wos++;
   });
 
-  var sh2 = [['Department','Total','Q1','Q2','Q3','Q4','Scopus','PubMed','WoS']];
+  var sh2 = [['Department','Total','Original Article','Review Article','Meta Analysis','Book/Chapter','Q1','Q2','Q3','Q4','Scopus','PubMed','WoS']];
   Object.keys(deptMap).sort().forEach(function(dept) {
     var d = deptMap[dept];
-    sh2.push([dept,d.total,d.q1,d.q2,d.q3,d.q4,d.scopus,d.pubmed,d.wos]);
+    sh2.push([dept,d.total,d.article,d.review,d.meta,d.book,d.q1,d.q2,d.q3,d.q4,d.scopus,d.pubmed,d.wos]);
   });
   var ws2 = XLSX.utils.aoa_to_sheet(sh2);
-  ws2['!cols'] = [{wch:28},{wch:8},{wch:6},{wch:6},{wch:6},{wch:6},{wch:8},{wch:8},{wch:6}];
+  ws2['!cols'] = [{wch:30},{wch:8},{wch:16},{wch:15},{wch:14},{wch:14},{wch:6},{wch:6},{wch:6},{wch:6},{wch:8},{wch:8},{wch:6}];
   XLSX.utils.book_append_sheet(wb, ws2, 'Department Summary');
 
-  // ── Per-Department Sheets ──
+  // Per-dept sheets
   var depts = [...new Set(allRecords.map(function(p){return p.department;}))].sort();
   depts.forEach(function(dept) {
     var dRows = allRecords.filter(function(p){return p.department===dept;});
     var shData = [headers].concat(dRows.map(function(p,i){
-      var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : p.indexing;
-      return [i+1,p.department,p.title,p.authors,p.correspondingAuthor,
-        p.correspondingEmail,p.correspondingAffiliation,p.journalName,
-        p.volume,p.issue,p.pageFrom,p.pageTo,p.doi,p.impactFactor,
-        p.quartile,idxStr,p.submittedAt];
+      var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : (p.indexing||'');
+      var title = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||'') : (p.title || p.bookTitle || '');
+      var bookTitle = ['Book','Book Chapter'].indexOf(p.pubType) > -1 ? (p.bookTitle||'') : '';
+      return [i+1,p.department,p.pubType,title,bookTitle,
+        p.authors||p.bookAuthors,p.correspondingAuthor,p.correspondingEmail,p.correspondingAffiliation,
+        p.journalName,p.issn,p.volume,p.issue,p.pageFrom,p.pageTo,
+        p.isbn,p.publisher,p.doi,p.impactFactor,p.year||p.bookYear,p.quartile,idxStr,
+        p.sdgGoals,p.submittedAt];
     }));
     var wsD = XLSX.utils.aoa_to_sheet(shData);
     wsD['!cols'] = ws1['!cols'];
@@ -671,10 +1080,9 @@ function generateExcel() {
     XLSX.utils.book_append_sheet(wb, wsD, shName);
   });
 
-  // Download
   var date = new Date().toISOString().split('T')[0];
-  XLSX.writeFile(wb, 'Research_Publications_' + date + '.xlsx');
-  showToast('✅ Excel downloaded! Open and set password in Excel: Review → Protect Workbook', '#16a34a', 6000);
+  XLSX.writeFile(wb, 'Research_Publications_'+date+'.xlsx');
+  showToast('✅ Excel downloaded!', '#16a34a', 5000);
 }
 
 // ── TOAST ──
