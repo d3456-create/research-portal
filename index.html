@@ -86,14 +86,14 @@ a{color:#c8102e}
 <!-- PASSWORD MODAL -->
 <div class="pwd-modal" id="pwd-modal">
   <div class="pwd-box">
-    <div style="font-size:1.2rem;font-weight:700;margin-bottom:.3rem">🔒 Download Excel</div>
-    <div style="font-size:.85rem;color:#5a5a7a;margin-bottom:1.2rem">Enter the master password to download the combined Excel file (all departments)</div>
+    <div style="font-size:1.2rem;font-weight:700;margin-bottom:.3rem">🔒 Download <span id="pwd-college-label">Excel</span></div>
+    <div style="font-size:.85rem;color:#5a5a7a;margin-bottom:1.2rem">Enter the master password to download the <span id="pwd-college-desc">Excel</span> file</div>
     <div class="fld"><label class="lbl">Master Password</label>
       <input type="password" id="admin-pwd-input" placeholder="Enter master password..." onkeydown="if(event.key==='Enter')doAdminDownload()">
     </div>
     <div id="pwd-err" style="color:#c8102e;font-size:.82rem;margin-bottom:.8rem;display:none">Incorrect password. Try again.</div>
     <div style="display:flex;gap:.7rem">
-      <button class="btn-red" onclick="doAdminDownload()">Download Excel</button>
+      <button class="btn-red" onclick="doAdminDownload()">Download</button>
       <button class="btn-out" onclick="closePwdModal()">Cancel</button>
     </div>
   </div>
@@ -137,7 +137,9 @@ a{color:#c8102e}
     <div style="display:flex;gap:.8rem;flex-wrap:wrap">
       <button class="btn-red" onclick="show('submit',document.querySelectorAll('.nav-btn')[1])">Submit New Publication</button>
       <button class="btn-dk" onclick="show('records',document.querySelectorAll('.nav-btn')[2])">View All Records</button>
-      <button class="btn-out" onclick="openPwdModal()">🔒 Download Excel</button>
+      <button class="btn-out" onclick="openPwdModal('SMC')" style="border-color:#c8102e;color:#c8102e">⬇ SMC Excel</button>
+      <button class="btn-out" onclick="openPwdModal('SDC')" style="border-color:#1a2744;color:#1a2744">⬇ SDC Excel</button>
+      <button class="btn-out" onclick="openPwdModal('AHS')" style="border-color:#16a34a;color:#16a34a">⬇ AHS Excel</button>
     </div>
   </div>
 
@@ -173,56 +175,10 @@ a{color:#c8102e}
     <div class="section-hd">Department</div>
     <div class="fld"><label class="lbl req">Select Department / College</label>
       <select id="f-dept">
-        <option value="">— Select Department / College —</option>
-        <optgroup label="Dental College">
-          <option value="Dental - Conservative Dentistry">Conservative Dentistry &amp; Endodontics</option>
-          <option value="Dental - Oral Medicine">Oral Medicine &amp; Radiology</option>
-          <option value="Dental - Oral Pathology">Oral Pathology &amp; Microbiology</option>
-          <option value="Dental - Oral Surgery">Oral &amp; Maxillofacial Surgery</option>
-          <option value="Dental - Orthodontics">Orthodontics &amp; Dentofacial Orthopaedics</option>
-          <option value="Dental - Paediatric Dentistry">Paediatric &amp; Preventive Dentistry</option>
-          <option value="Dental - Periodontics">Periodontics</option>
-          <option value="Dental - Prosthodontics">Prosthodontics &amp; Crown &amp; Bridge</option>
-          <option value="Dental - Public Health Dentistry">Public Health Dentistry</option>
-        </optgroup>
-        <optgroup label="Medical College">
-          <option value="Medical - Anatomy">Anatomy</option>
-          <option value="Medical - Biochemistry">Biochemistry</option>
-          <option value="Medical - Community Medicine">Community Medicine</option>
-          <option value="Medical - Dermatology">Dermatology</option>
-          <option value="Medical - ENT">ENT</option>
-          <option value="Medical - Forensic Medicine">Forensic Medicine</option>
-          <option value="Medical - General Medicine">General Medicine</option>
-          <option value="Medical - General Surgery">General Surgery</option>
-          <option value="Medical - Microbiology">Microbiology</option>
-          <option value="Medical - Obs & Gynaecology">Obstetrics &amp; Gynaecology</option>
-          <option value="Medical - Ophthalmology">Ophthalmology</option>
-          <option value="Medical - Orthopaedics">Orthopaedics</option>
-          <option value="Medical - Paediatrics">Paediatrics</option>
-          <option value="Medical - Pathology">Pathology</option>
-          <option value="Medical - Pharmacology">Pharmacology</option>
-          <option value="Medical - Physiology">Physiology</option>
-          <option value="Medical - Psychiatry">Psychiatry</option>
-          <option value="Medical - Radiology">Radiology</option>
-        </optgroup>
-        <optgroup label="Allied Health Sciences">
-          <option value="Allied - Medical Lab Technology">Medical Lab Technology</option>
-          <option value="Allied - Physiotherapy">Physiotherapy</option>
-          <option value="Allied - Nursing">Nursing</option>
-          <option value="Allied - Pharmacy">Pharmacy</option>
-          <option value="Allied - Nutrition & Dietetics">Nutrition &amp; Dietetics</option>
-          <option value="Allied - Optometry">Optometry</option>
-          <option value="Allied - Radiography">Radiography &amp; Imaging Technology</option>
-          <option value="Allied - Other">Other Allied Health</option>
-        </optgroup>
-        <optgroup label="Research Facility">
-          <option value="Research - Biomedical">Biomedical Research</option>
-          <option value="Research - Clinical Trials">Clinical Trials Unit</option>
-          <option value="Research - Genomics">Genomics &amp; Molecular Biology</option>
-          <option value="Research - Epidemiology">Epidemiology &amp; Public Health Research</option>
-          <option value="Research - Other">Other Research Division</option>
-        </optgroup>
-        <option value="Other">Other</option>
+        <option value="">— Select College —</option>
+        <option value="SMC">SMC — Santosh Medical College</option>
+        <option value="SDC">SDC — Santosh Dental College</option>
+        <option value="AHS">AHS — Allied Health Sciences</option>
       </select>
     </div>
   </div>
@@ -244,14 +200,32 @@ a{color:#c8102e}
 
   <!-- ② AUTHOR LIST (ordered as they appear in article) -->
   <div class="card">
-    <div class="section-hd">Author List <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">— arrange in order as they appear in the publication</span></div>
-    <div style="font-size:.78rem;color:#5a5a7a;margin-bottom:.8rem">Add each author, then drag &amp; drop to reorder. The order here will be the published author order.</div>
-    <div id="author-list-container"></div>
-    <div class="author-add-row">
-      <input id="new-author-input" placeholder="Author name (e.g. Sharma RK)" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();addAuthor();}">
-      <button class="btn-dk" type="button" onclick="addAuthor()" style="white-space:nowrap">+ Add Author</button>
+    <div class="section-hd">Author List <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem;color:#5a5a7a">— add each author with their role and college(s)</span></div>
+    <div style="font-size:.78rem;color:#5a5a7a;margin-bottom:.8rem">
+      Add each author. Select their role and which college(s) they belong to. A paper with authors from SMC + SDC will appear in <strong>both</strong> college downloads but count as <strong>one</strong> paper in totals.
     </div>
-    <div style="font-size:.75rem;color:#5a5a7a;margin-top:.4rem">First author listed will be treated as primary author in records.</div>
+    <div id="author-list-container"></div>
+    <div class="author-add-row" style="display:grid;grid-template-columns:1fr auto auto auto;gap:.5rem;align-items:center">
+      <input id="new-author-input" placeholder="Author name (e.g. Sharma RK)" onkeydown="if(event.key==='Enter'){event.preventDefault();addAuthor();}">
+      <select id="new-author-role" style="width:auto">
+        <option value="Author">Author</option>
+        <option value="First Author">First Author</option>
+        <option value="Second Author">Second Author</option>
+        <option value="Corresponding Author">Corresponding Author</option>
+      </select>
+      <select id="new-author-college" style="width:auto">
+        <option value="SMC">SMC</option>
+        <option value="SDC">SDC</option>
+        <option value="AHS">AHS</option>
+        <option value="SMC,SDC">SMC + SDC</option>
+        <option value="SMC,AHS">SMC + AHS</option>
+        <option value="SDC,AHS">SDC + AHS</option>
+        <option value="SMC,SDC,AHS">All Three</option>
+        <option value="External">External</option>
+      </select>
+      <button class="btn-dk" type="button" onclick="addAuthor()" style="white-space:nowrap">+ Add</button>
+    </div>
+    <div style="font-size:.75rem;color:#5a5a7a;margin-top:.4rem">⚠️ Authors without First Author / Second Author / Corresponding Author role will be <span style="color:#c8102e;font-weight:700">highlighted red</span> in the Excel download.</div>
   </div>
 
   <!-- ARTICLE DETAILS — shown for Original Article / Review Article / Meta Analysis -->
@@ -386,62 +360,18 @@ a{color:#c8102e}
     <div style="display:flex;gap:.7rem;flex-wrap:wrap">
       <button class="btn-dk" onclick="loadRecords()">🔄 Refresh</button>
       <button class="btn-red" onclick="show('submit',document.querySelectorAll('.nav-btn')[1])">+ Submit New</button>
-      <button class="btn-out" onclick="openPwdModal()">🔒 Download Excel</button>
+      <button class="btn-out" onclick="openPwdModal('SMC')" style="border-color:#c8102e;color:#c8102e">⬇ SMC</button>
+      <button class="btn-out" onclick="openPwdModal('SDC')" style="border-color:#1a2744;color:#1a2744">⬇ SDC</button>
+      <button class="btn-out" onclick="openPwdModal('AHS')" style="border-color:#16a34a;color:#16a34a">⬇ AHS</button>
     </div>
   </div>
   <div class="filter-row">
     <input id="f-search" placeholder="Search title, author, journal, impact factor..." oninput="renderRecords()">
     <select id="f-fdept" onchange="renderRecords()">
-      <option value="">All Departments</option>
-      <optgroup label="Dental College">
-        <option value="Dental - Conservative Dentistry">Conservative Dentistry</option>
-        <option value="Dental - Oral Medicine">Oral Medicine</option>
-        <option value="Dental - Oral Pathology">Oral Pathology</option>
-        <option value="Dental - Oral Surgery">Oral Surgery</option>
-        <option value="Dental - Orthodontics">Orthodontics</option>
-        <option value="Dental - Paediatric Dentistry">Paediatric Dentistry</option>
-        <option value="Dental - Periodontics">Periodontics</option>
-        <option value="Dental - Prosthodontics">Prosthodontics</option>
-        <option value="Dental - Public Health Dentistry">Public Health Dentistry</option>
-      </optgroup>
-      <optgroup label="Medical College">
-        <option value="Medical - Anatomy">Anatomy</option>
-        <option value="Medical - Biochemistry">Biochemistry</option>
-        <option value="Medical - Community Medicine">Community Medicine</option>
-        <option value="Medical - Dermatology">Dermatology</option>
-        <option value="Medical - ENT">ENT</option>
-        <option value="Medical - Forensic Medicine">Forensic Medicine</option>
-        <option value="Medical - General Medicine">General Medicine</option>
-        <option value="Medical - General Surgery">General Surgery</option>
-        <option value="Medical - Microbiology">Microbiology</option>
-        <option value="Medical - Obs & Gynaecology">Obstetrics &amp; Gynaecology</option>
-        <option value="Medical - Ophthalmology">Ophthalmology</option>
-        <option value="Medical - Orthopaedics">Orthopaedics</option>
-        <option value="Medical - Paediatrics">Paediatrics</option>
-        <option value="Medical - Pathology">Pathology</option>
-        <option value="Medical - Pharmacology">Pharmacology</option>
-        <option value="Medical - Physiology">Physiology</option>
-        <option value="Medical - Psychiatry">Psychiatry</option>
-        <option value="Medical - Radiology">Radiology</option>
-      </optgroup>
-      <optgroup label="Allied Health Sciences">
-        <option value="Allied - Medical Lab Technology">Medical Lab Technology</option>
-        <option value="Allied - Physiotherapy">Physiotherapy</option>
-        <option value="Allied - Nursing">Nursing</option>
-        <option value="Allied - Pharmacy">Pharmacy</option>
-        <option value="Allied - Nutrition & Dietetics">Nutrition &amp; Dietetics</option>
-        <option value="Allied - Optometry">Optometry</option>
-        <option value="Allied - Radiography">Radiography</option>
-        <option value="Allied - Other">Other Allied Health</option>
-      </optgroup>
-      <optgroup label="Research Facility">
-        <option value="Research - Biomedical">Biomedical Research</option>
-        <option value="Research - Clinical Trials">Clinical Trials</option>
-        <option value="Research - Genomics">Genomics</option>
-        <option value="Research - Epidemiology">Epidemiology</option>
-        <option value="Research - Other">Other Research</option>
-      </optgroup>
-      <option value="Other">Other</option>
+      <option value="">All Colleges</option>
+      <option value="SMC">SMC</option>
+      <option value="SDC">SDC</option>
+      <option value="AHS">AHS</option>
     </select>
     <select id="f-fpubtype" onchange="renderRecords()">
       <option value="">All Types</option>
@@ -476,7 +406,7 @@ a{color:#c8102e}
 // CONFIGURATION
 // ═══════════════════════════════════════════════
 var CONFIG = {
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwhaGDOVOO9JLSLkE1BShn0V-hM1VvPJSGwWrf5bMsYoKWrFOxYpPls97dG_vCRj689Gg/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzku-3mupSLaezYHmKrRmnHh0d4r-I-EyQpT7wcKmidrD43ONJSu0guTFfgs1dk5J934g/exec",
   ADMIN_PASSWORD: "Research@2024",
   AUTO_REFRESH: 30
 };
@@ -488,7 +418,8 @@ var selIdx = [];
 var selSdgGoals = [];
 var uploadedFile = null;
 var uploadedName = '';
-var authorList = []; // ordered author array
+// authorList: [{name, role, colleges}]
+var authorList = [];
 var refreshTimer = null;
 
 // ── SDG DATA ──
@@ -512,6 +443,8 @@ var SDG_GOALS = [
   {num:17, label:'Partnerships for the Goals',   color:'#19486a'}
 ];
 
+var NAMED_ROLES = ['First Author','Second Author','Corresponding Author'];
+
 // ── INIT ──
 window.onload = function() {
   buildSdgGrid();
@@ -528,7 +461,7 @@ window.onload = function() {
   }
 };
 
-// ── SDG GRID BUILDER ──
+// ── SDG GRID ──
 function buildSdgGrid() {
   var grid = document.getElementById('sdg-grid');
   grid.innerHTML = SDG_GOALS.map(function(g) {
@@ -544,46 +477,41 @@ function buildSdgGrid() {
 function toggleSdg(num) {
   var i = selSdgGoals.indexOf(num);
   var el = document.getElementById('sdg-item-'+num);
-  if (i > -1) {
-    selSdgGoals.splice(i,1);
-    el.classList.remove('on');
-  } else {
-    selSdgGoals.push(num);
-    el.classList.add('on');
-  }
+  if (i > -1) { selSdgGoals.splice(i,1); el.classList.remove('on'); }
+  else { selSdgGoals.push(num); el.classList.add('on'); }
   selSdgGoals.sort(function(a,b){return a-b;});
-  var lbl = document.getElementById('sdg-selected-label');
-  lbl.textContent = selSdgGoals.length
-    ? 'Selected: SDG ' + selSdgGoals.join(', ')
-    : '';
+  document.getElementById('sdg-selected-label').textContent = selSdgGoals.length ? 'Selected: SDG ' + selSdgGoals.join(', ') : '';
 }
 
-// ── PUBLICATION TYPE TOGGLE ──
+// ── PUB TYPE TOGGLE ──
 function onPubTypeChange() {
   var type = document.getElementById('f-pubtype').value;
   var isArticle = ['Original Article','Review Article','Meta Analysis'].indexOf(type) > -1;
   var isBook = ['Book','Book Chapter'].indexOf(type) > -1;
-  var isChapter = type === 'Book Chapter';
-
   document.getElementById('section-article').style.display = isArticle ? '' : 'none';
   document.getElementById('section-book').style.display = isBook ? '' : 'none';
-  document.getElementById('book-chapter-title-fld').style.display = isChapter ? '' : 'none';
+  document.getElementById('book-chapter-title-fld').style.display = type === 'Book Chapter' ? '' : 'none';
 }
 
-// ── AUTHOR LIST ──
+// ── AUTHOR LIST (with role + college) ──
 function renderAuthorList() {
   var container = document.getElementById('author-list-container');
   if (!authorList.length) {
     container.innerHTML = '<div style="color:#5a5a7a;font-size:.82rem;font-style:italic;margin-bottom:.5rem">No authors added yet.</div>';
     return;
   }
-  container.innerHTML = authorList.map(function(name, idx) {
+  container.innerHTML = authorList.map(function(a, idx) {
+    var isNamed = NAMED_ROLES.indexOf(a.role) > -1;
+    var roleBg = isNamed ? '#d1fae5' : '#fee2e2';
+    var roleColor = isNamed ? '#065f46' : '#991b1b';
     return '<div class="author-row" draggable="true" data-idx="'+idx+'" ' +
       'ondragstart="dragStart(event,'+idx+')" ondragover="dragOver(event)" ondrop="dragDrop(event,'+idx+')">' +
       '<span class="author-drag-handle">⠿</span>' +
       '<span style="flex:1;font-size:.88rem">' +
-        '<strong style="color:#c8102e;font-family:Courier New,monospace;font-size:.78rem;margin-right:.5rem">'+(idx+1)+'.</strong>' +
-        esc(name) +
+        '<strong style="color:#c8102e;font-family:Courier New,monospace;font-size:.78rem;margin-right:.4rem">'+(idx+1)+'.</strong>' +
+        esc(a.name) +
+        '<span style="margin-left:.5rem;font-size:.7rem;background:'+roleBg+';color:'+roleColor+';padding:.1rem .4rem;border-radius:3px;font-weight:700">'+esc(a.role)+'</span>' +
+        '<span style="margin-left:.3rem;font-size:.7rem;background:#e0f2fe;color:#075985;padding:.1rem .4rem;border-radius:3px;font-weight:700">'+esc(a.colleges)+'</span>' +
       '</span>' +
       '<button onclick="removeAuthor('+idx+')" style="background:none;border:none;cursor:pointer;color:#c8102e;font-size:1rem;padding:0 .2rem" title="Remove">✕</button>' +
       '</div>';
@@ -594,15 +522,14 @@ function addAuthor() {
   var inp = document.getElementById('new-author-input');
   var name = inp.value.trim();
   if (!name) return;
-  authorList.push(name);
+  var role = document.getElementById('new-author-role').value;
+  var colleges = document.getElementById('new-author-college').value;
+  authorList.push({name: name, role: role, colleges: colleges});
   inp.value = '';
   renderAuthorList();
 }
 
-function removeAuthor(idx) {
-  authorList.splice(idx, 1);
-  renderAuthorList();
-}
+function removeAuthor(idx) { authorList.splice(idx, 1); renderAuthorList(); }
 
 var dragSrcIdx = null;
 function dragStart(e, idx) { dragSrcIdx = idx; e.dataTransfer.effectAllowed = 'move'; }
@@ -618,9 +545,7 @@ function dragDrop(e, targetIdx) {
 
 // ── CONNECTION ──
 function checkConnection() {
-  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    setConn('not-configured'); return;
-  }
+  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') { setConn('not-configured'); return; }
   setConn('connecting');
   fetch(CONFIG.APPS_SCRIPT_URL + '?action=ping', {mode:'no-cors'})
     .then(function() { setConn('online'); })
@@ -630,22 +555,14 @@ function checkConnection() {
 function setConn(state) {
   var dot = document.getElementById('conn-dot');
   var txt = document.getElementById('conn-text');
-  var states = {
-    'online': ['#16a34a', 'Live · Google Sheets Connected'],
-    'offline': ['#c8102e', 'Offline'],
-    'connecting': ['#d97706', 'Connecting...'],
-    'not-configured': ['#d97706', 'Setup needed — see README']
-  };
+  var states = { 'online':['#16a34a','Live · Google Sheets Connected'], 'offline':['#c8102e','Offline'], 'connecting':['#d97706','Connecting...'], 'not-configured':['#d97706','Setup needed'] };
   var s = states[state] || states.connecting;
-  dot.style.background = s[0];
-  txt.textContent = s[1];
+  dot.style.background = s[0]; txt.textContent = s[1];
 }
 
 // ── NAVIGATION ──
 function show(id, btn) {
-  ['home','submit','records'].forEach(function(v) {
-    document.getElementById('view-'+v).style.display = v === id ? '' : 'none';
-  });
+  ['home','submit','records'].forEach(function(v) { document.getElementById('view-'+v).style.display = v === id ? '' : 'none'; });
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('on'); });
   if (btn) btn.classList.add('on');
   if (id === 'records') loadRecords();
@@ -655,18 +572,13 @@ function show(id, btn) {
 // ── LOAD RECORDS ──
 function loadRecords() {
   if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    allRecords = getSampleData();
-    renderRecords();
-    updateStats();
-    return;
+    allRecords = getSampleData(); renderRecords(); updateStats(); return;
   }
   fetch(CONFIG.APPS_SCRIPT_URL + '?action=get')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       allRecords = data.records || [];
-      setConn('online');
-      renderRecords();
-      updateStats();
+      setConn('online'); renderRecords(); updateStats();
     })
     .catch(function() {
       setConn('offline');
@@ -678,9 +590,9 @@ function loadRecords() {
 
 function getSampleData() {
   return [
-    {id:'demo1',department:'Medical - General Medicine',pubType:'Original Article',title:'A Study on Hypertension Management in Rural India',authors:'Sharma RK, Gupta M',correspondingAuthor:'Dr. R.K. Sharma',correspondingEmail:'rksharma@med.ac.in',correspondingAffiliation:'Dept of Medicine, AIIMS',journalName:'Indian Journal of Medical Research',issn:'0971-5916',volume:'45',issue:'3',pageFrom:'101',pageTo:'108',doi:'10.1234/ijmr.2024.001',impactFactor:'4.2',year:'2024',quartile:'Q1',indexing:['Scopus','PubMed'],sdgGoals:'3, 10',submittedAt:'Sample Data'},
-    {id:'demo2',department:'Medical - Pathology',pubType:'Review Article',title:'Histopathological Analysis of Breast Carcinoma Subtypes',authors:'Patel S, Singh A, Kumar R',correspondingAuthor:'Dr. S. Patel',correspondingEmail:'spatel@path.ac.in',correspondingAffiliation:'Dept of Pathology',journalName:'Histopathology Journal',issn:'0309-0167',volume:'12',issue:'1',pageFrom:'55',pageTo:'62',doi:'10.5678/hj.2024.042',impactFactor:'3.1',year:'2024',quartile:'Q2',indexing:['WoS'],sdgGoals:'3',submittedAt:'Sample Data'},
-    {id:'demo3',department:'Dental - Oral Pathology',pubType:'Book Chapter',title:'',bookChapterTitle:'Oral Mucosal Diseases — Diagnostic Criteria',bookTitle:'Comprehensive Oral Pathology Textbook',bookAuthors:'Mehta A, Reddy VK',isbn:'978-81-312-1234-5',publisher:'Jaypee Brothers',bookYear:'2023',sdgGoals:'3, 4',submittedAt:'Sample Data'}
+    {id:'demo1',department:'SMC',pubType:'Original Article',title:'Hypertension Management Study',authors:'Sharma RK [First Author|SMC], Gupta M [Author|SDC]',authorDetails:'Sharma RK|First Author|SMC;Gupta M|Author|SDC',colleges:'SMC,SDC',correspondingAuthor:'Dr. R.K. Sharma',correspondingEmail:'rksharma@smc.ac.in',journalName:'Indian Journal of Medical Research',issn:'0971-5916',volume:'45',issue:'3',pageFrom:'101',pageTo:'108',doi:'10.1234/ijmr.2024.001',impactFactor:'4.2',year:'2024',quartile:'Q1',indexing:'Scopus,PubMed',sdgGoals:'SDG 3',submittedAt:'Sample'},
+    {id:'demo2',department:'SDC',pubType:'Review Article',title:'Oral Carcinoma Diagnostic Review',authors:'Patel S [Corresponding Author|SDC], Singh A [Second Author|SMC]',authorDetails:'Patel S|Corresponding Author|SDC;Singh A|Second Author|SMC',colleges:'SDC,SMC',correspondingAuthor:'Dr. S. Patel',correspondingEmail:'spatel@sdc.ac.in',journalName:'Oral Oncology',issn:'1368-8375',volume:'12',issue:'1',pageFrom:'55',pageTo:'62',doi:'10.5678/oo.2024.042',impactFactor:'3.1',year:'2024',quartile:'Q2',indexing:'WoS',sdgGoals:'SDG 3',submittedAt:'Sample'},
+    {id:'demo3',department:'AHS',pubType:'Original Article',title:'Physiotherapy Outcomes in Post-Stroke Patients',authors:'Mehta A [First Author|AHS]',authorDetails:'Mehta A|First Author|AHS',colleges:'AHS',correspondingAuthor:'Dr. A. Mehta',correspondingEmail:'amehta@ahs.ac.in',journalName:'Journal of Physiotherapy',issn:'1836-9553',volume:'70',issue:'2',pageFrom:'88',pageTo:'95',doi:'10.1016/j.jphys.2024.03.001',impactFactor:'2.8',year:'2024',quartile:'Q2',indexing:'Scopus',sdgGoals:'SDG 3',submittedAt:'Sample'}
   ];
 }
 
@@ -696,12 +608,13 @@ function renderRecords() {
   var ifMax = parseFloat(document.getElementById('f-fif-max').value) || null;
 
   var filtered = allRecords.filter(function(p) {
-    var searchStr = (p.title||'')+(p.bookTitle||'')+(p.bookChapterTitle||'')+(p.authors||'')+(p.bookAuthors||'')+(p.journalName||'')+(p.department||'')+(p.impactFactor||'')+(p.issn||'')+(p.isbn||'');
+    var searchStr = (p.title||'')+(p.bookTitle||'')+(p.bookChapterTitle||'')+(p.authors||'')+(p.journalName||'')+(p.department||'')+(p.impactFactor||'')+(p.issn||'');
     var ms = !s || searchStr.toLowerCase().includes(s);
-    var md = !d || p.department === d;
+    // Change 2: filter by college — a paper tagged SMC,SDC matches both SMC and SDC filter
+    var md = !d || (p.colleges || p.department || '').indexOf(d) > -1;
     var mpt = !pt || p.pubType === pt;
     var mq = !q || p.quartile === q;
-    var mi = !idx || (p.indexing && (Array.isArray(p.indexing) ? p.indexing.includes(idx) : p.indexing.indexOf(idx) > -1));
+    var mi = !idx || (p.indexing && p.indexing.indexOf(idx) > -1);
     var myr = !yr || (p.year||'').includes(yr) || (p.bookYear||'').includes(yr);
     var pIF = parseFloat(p.impactFactor) || null;
     var mifMin = !ifMin || (pIF && pIF >= ifMin);
@@ -713,71 +626,52 @@ function renderRecords() {
   document.getElementById('rec-count').textContent = filtered.length + ' of ' + allRecords.length + ' records';
 
   if (!filtered.length) {
-    el.innerHTML = '<div class="empty"><div style="font-size:2.5rem;margin-bottom:.7rem">📭</div><div style="font-weight:700">' +
-      (allRecords.length === 0 ? 'No publications yet.' : 'No results match filters.') + '</div>' +
-      (allRecords.length === 0 ? '<button class="btn-red" style="margin-top:1rem" onclick="show(\'submit\',document.querySelectorAll(\'.nav-btn\')[1])">Submit First</button>' : '') +
-      '</div>';
+    el.innerHTML = '<div class="empty"><div style="font-size:2.5rem;margin-bottom:.7rem">📭</div><div style="font-weight:700">'+(allRecords.length===0?'No publications yet.':'No results match filters.')+'</div>'+(allRecords.length===0?'<button class="btn-red" style="margin-top:1rem" onclick="show(\'submit\',document.querySelectorAll(\'.nav-btn\')[1])">Submit First</button>':'')+'</div>';
     return;
   }
 
   el.innerHTML = filtered.map(function(p) {
     var isArticle = ['Original Article','Review Article','Meta Analysis'].indexOf(p.pubType) > -1;
     var isBook = ['Book','Book Chapter'].indexOf(p.pubType) > -1;
-    var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing || '').split(',').map(function(x){return x.trim();});
-    var qc = {Q1:'q1',Q2:'q2',Q3:'q3',Q4:'q4'}[p.quartile] || '';
+    var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',').map(function(x){return x.trim();});
+    var qc = {Q1:'q1',Q2:'q2',Q3:'q3',Q4:'q4'}[p.quartile]||'';
     var ptBadge = p.pubType ? '<span class="badge" style="background:#ede9fe;color:#5b21b6">'+esc(p.pubType)+'</span>' : '';
+    var colleges = p.colleges || p.department || '';
 
-    var titleHtml = '';
-    if (p.pubType === 'Book Chapter') {
-      titleHtml = '<div class="pub-title">'+esc(p.bookChapterTitle || p.title)+'</div>' +
-        '<div style="font-size:.83rem;color:#5a5a7a;margin-bottom:.2rem">In: <em>'+esc(p.bookTitle)+'</em></div>';
-    } else if (p.pubType === 'Book') {
-      titleHtml = '<div class="pub-title">'+esc(p.bookTitle || p.title)+'</div>';
-    } else {
-      titleHtml = '<div class="pub-title">'+esc(p.title)+'</div>';
-    }
+    var titleHtml = p.pubType==='Book Chapter' ?
+      '<div class="pub-title">'+esc(p.bookChapterTitle||p.title)+'</div><div style="font-size:.83rem;color:#5a5a7a;margin-bottom:.2rem">In: <em>'+esc(p.bookTitle)+'</em></div>' :
+      '<div class="pub-title">'+esc(p.pubType==='Book'?(p.bookTitle||p.title):p.title)+'</div>';
 
     var metaHtml = '';
     if (isArticle) {
-      var pages = p.pageFrom && p.pageTo ? ' pp. '+p.pageFrom+'–'+p.pageTo : '';
-      var vol = p.volume ? ', Vol. '+p.volume+(p.issue ? '('+p.issue+')' : '') : '';
-      var yrStr = p.year ? ' ('+p.year+')' : '';
+      var pages = p.pageFrom&&p.pageTo?' pp. '+p.pageFrom+'–'+p.pageTo:'';
+      var vol = p.volume?', Vol. '+p.volume+(p.issue?'('+p.issue+')':''):'';
+      var yrStr = p.year?' ('+p.year+')':'';
       metaHtml = '<div style="font-size:.83rem;margin-bottom:.35rem"><em>'+esc(p.journalName)+'</em>'+vol+pages+yrStr+'</div>';
-      if (p.issn) metaHtml += '<div style="font-size:.75rem;color:#5a5a7a;margin-bottom:.2rem">ISSN: '+esc(p.issn)+'</div>';
       if (p.doi) metaHtml += '<div style="font-family:Courier New,monospace;font-size:.75rem;color:#c8102e;margin-bottom:.4rem">DOI: <a href="https://doi.org/'+esc(p.doi)+'" target="_blank">'+esc(p.doi)+'</a></div>';
     } else if (isBook) {
-      var authors = p.bookAuthors || p.authors;
-      metaHtml = '<div class="pub-meta">'+esc(authors)+'</div>';
-      if (p.publisher) metaHtml += '<div style="font-size:.83rem;margin-bottom:.2rem">Publisher: <em>'+esc(p.publisher)+'</em>'+(p.bookYear ? ' ('+esc(p.bookYear)+')' : '')+'</div>';
+      if (p.publisher) metaHtml = '<div style="font-size:.83rem;margin-bottom:.2rem">Publisher: <em>'+esc(p.publisher)+'</em>'+(p.bookYear?' ('+esc(p.bookYear)+')':'')+'</div>';
       if (p.isbn) metaHtml += '<div style="font-family:Courier New,monospace;font-size:.75rem;color:#5a5a7a;margin-bottom:.3rem">ISBN: '+esc(p.isbn)+'</div>';
     }
 
     var authorMeta = isArticle ? '<div class="pub-meta">'+esc(p.authors)+'</div>' : '';
-    var sdgStr = p.sdgGoals ? '<span style="font-size:.7rem;background:#e0f2fe;color:#075985;padding:.15rem .5rem;border-radius:3px;font-weight:700;margin:.1rem">🌍 SDG: '+esc(p.sdgGoals)+'</span>' : '';
+    var sdgStr = p.sdgGoals ? '<span style="font-size:.7rem;background:#e0f2fe;color:#075985;padding:.15rem .5rem;border-radius:3px;font-weight:700;margin:.1rem">🌍 '+esc(p.sdgGoals)+'</span>' : '';
+    var collegeBadges = colleges.split(',').map(function(c){ return '<span style="font-size:.7rem;background:#1a2744;color:#fff;padding:.15rem .45rem;border-radius:3px;font-weight:700;margin:.1rem">'+esc(c.trim())+'</span>'; }).join('');
 
-    var correspondingHtml = '';
-    if (isArticle && p.correspondingAuthor) {
-      correspondingHtml = '<div style="border-top:1px solid #d4c9b0;margin-top:.7rem;padding-top:.6rem;font-size:.78rem;color:#5a5a7a">' +
-        '<strong>Corresponding:</strong> '+esc(p.correspondingAuthor)+' — '+esc(p.correspondingEmail)+
-        (p.correspondingAffiliation ? ' | '+esc(p.correspondingAffiliation) : '')+'</div>';
-    }
+    var correspondingHtml = isArticle && p.correspondingAuthor ?
+      '<div style="border-top:1px solid #d4c9b0;margin-top:.7rem;padding-top:.6rem;font-size:.78rem;color:#5a5a7a"><strong>Corresponding:</strong> '+esc(p.correspondingAuthor)+' — '+esc(p.correspondingEmail)+(p.correspondingAffiliation?' | '+esc(p.correspondingAffiliation):'')+'</div>' : '';
 
     return '<div class="card card-accent" style="margin-bottom:.9rem">' +
       '<div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">' +
-      '<div style="flex:1">' +
-      titleHtml + authorMeta + metaHtml +
+      '<div style="flex:1">' + titleHtml + authorMeta + metaHtml +
       '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center">' +
-      '<span style="font-size:.7rem;background:#e9ecef;padding:.15rem .5rem;border-radius:3px;font-weight:700">'+esc(p.department)+'</span>' +
-      ptBadge +
-      (p.quartile ? '<span class="badge '+qc+'">'+esc(p.quartile)+'</span>' : '') +
-      (p.impactFactor ? '<span class="badge" style="background:#fff7ed;color:#9a3412">IF: '+esc(p.impactFactor)+'</span>' : '') +
+      collegeBadges + ptBadge +
+      (p.quartile?'<span class="badge '+qc+'">'+esc(p.quartile)+'</span>':'') +
+      (p.impactFactor?'<span class="badge" style="background:#fff7ed;color:#9a3412">IF: '+esc(p.impactFactor)+'</span>':'') +
       idxArr.filter(Boolean).map(function(i){return '<span class="badge bidx">'+esc(i)+'</span>';}).join('') +
-      sdgStr +
-      '</div></div>' +
+      sdgStr + '</div></div>' +
       '<div style="font-size:.72rem;color:#5a5a7a;text-align:right;min-width:90px">'+esc(p.submittedAt||'')+'</div>' +
-      '</div>' +
-      correspondingHtml +
-      '</div>';
+      '</div>' + correspondingHtml + '</div>';
   }).join('');
 }
 
@@ -786,35 +680,29 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── STATS ──
+// ── STATS (unique paper count — a paper shared by SMC+SDC counts as 1) ──
 function updateStats() {
-  document.getElementById('s-total').textContent = allRecords.length;
+  var unique = allRecords.length; // each record = 1 paper regardless of colleges
+  document.getElementById('s-total').textContent = unique;
   document.getElementById('s-q1').textContent = allRecords.filter(function(p){return p.quartile==='Q1';}).length;
-  document.getElementById('s-scopus').textContent = allRecords.filter(function(p){
-    var idx = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',');
-    return idx.some(function(i){return i.trim()==='Scopus';});
-  }).length;
-  document.getElementById('s-depts').textContent = new Set(allRecords.map(function(p){return p.department;})).size;
+  document.getElementById('s-scopus').textContent = allRecords.filter(function(p){ return (p.indexing||'').indexOf('Scopus')>-1; }).length;
+  document.getElementById('s-depts').textContent = new Set(allRecords.map(function(p){ return (p.colleges||p.department||''); })).size;
 
   var rec = document.getElementById('home-recent');
-  if (!allRecords.length) {
-    rec.innerHTML = '<div style="color:#5a5a7a;font-style:italic">No submissions yet.</div>';
-    return;
-  }
-  var recent = allRecords.slice(0, 3);
+  if (!allRecords.length) { rec.innerHTML = '<div style="color:#5a5a7a;font-style:italic">No submissions yet.</div>'; return; }
   rec.innerHTML = '<div class="section-hd">Recent Submissions</div>' +
-    recent.map(function(p) {
-      var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',').map(function(x){return x.trim();});
+    allRecords.slice(0,3).map(function(p) {
+      var idxArr = (p.indexing||'').split(',').map(function(x){return x.trim();});
       var qc = {Q1:'q1',Q2:'q2',Q3:'q3',Q4:'q4'}[p.quartile]||'';
-      var displayTitle = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||p.title) : (p.bookTitle||p.title||'Untitled');
+      var displayTitle = p.pubType==='Book Chapter'?(p.bookChapterTitle||p.title):(p.bookTitle||p.title||'Untitled');
+      var colleges = (p.colleges||p.department||'').split(',');
+      var collegeBadges = colleges.map(function(c){ return '<span style="font-size:.7rem;background:#1a2744;color:#fff;padding:.1rem .4rem;border-radius:3px;font-weight:700">'+esc(c.trim())+'</span>'; }).join(' ');
       return '<div class="card card-accent" style="margin-bottom:.8rem">' +
         '<div class="pub-title">'+esc(displayTitle)+'</div>' +
-        '<div class="pub-meta">'+esc(p.authors||p.bookAuthors)+'</div>' +
-        '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center">' +
-        (p.pubType ? '<span class="badge" style="background:#ede9fe;color:#5b21b6">'+esc(p.pubType)+'</span>' : '') +
-        (p.journalName ? '<em style="font-size:.84rem">'+esc(p.journalName)+'</em>' : '') +
-        (p.publisher ? '<em style="font-size:.84rem">'+esc(p.publisher)+'</em>' : '') +
-        (p.quartile ? '<span class="badge '+qc+'">'+esc(p.quartile)+'</span>' : '') +
+        '<div class="pub-meta">'+esc(p.authors)+'</div>' +
+        '<div style="display:flex;gap:.2rem;flex-wrap:wrap;align-items:center">' + collegeBadges +
+        (p.pubType?'<span class="badge" style="background:#ede9fe;color:#5b21b6">'+esc(p.pubType)+'</span>':'') +
+        (p.quartile?'<span class="badge '+qc+'">'+esc(p.quartile)+'</span>':'') +
         idxArr.filter(Boolean).map(function(i){return '<span class="badge bidx">'+esc(i)+'</span>';}).join('') +
         '</div></div>';
     }).join('');
@@ -828,38 +716,27 @@ function selQ(el, q) {
 }
 
 function togIdx(el, val) {
-  if (val === 'None') {
-    selIdx = ['None'];
-    document.querySelectorAll('#idx-chips .chip').forEach(function(c){c.classList.remove('on');});
-    el.classList.add('on');
-  } else {
+  if (val==='None') { selIdx=['None']; document.querySelectorAll('#idx-chips .chip').forEach(function(c){c.classList.remove('on');}); el.classList.add('on'); }
+  else {
     selIdx = selIdx.filter(function(v){return v!=='None';});
-    document.querySelectorAll('#idx-chips .chip').forEach(function(c){
-      if (c.textContent.trim()==='None') c.classList.remove('on');
-    });
-    var i = selIdx.indexOf(val);
-    if (i > -1) selIdx.splice(i,1); else selIdx.push(val);
+    document.querySelectorAll('#idx-chips .chip').forEach(function(c){ if(c.textContent.trim()==='None') c.classList.remove('on'); });
+    var i=selIdx.indexOf(val); if(i>-1) selIdx.splice(i,1); else selIdx.push(val);
     el.classList.toggle('on');
   }
 }
 
 function handleFile(input) {
-  var f = input.files[0]; if (!f) return;
-  uploadedName = f.name;
-  var r = new FileReader();
-  r.onload = function(e) { uploadedFile = e.target.result; };
-  r.readAsDataURL(f);
+  var f=input.files[0]; if(!f) return;
+  uploadedName=f.name;
+  var r=new FileReader(); r.onload=function(e){uploadedFile=e.target.result;}; r.readAsDataURL(f);
   document.getElementById('upload-zone').classList.add('has');
-  document.getElementById('upload-txt').innerHTML =
-    '<div style="font-size:1.2rem;margin-bottom:.3rem">✅</div>' +
-    '<div style="font-weight:600;color:#16a34a">'+f.name+'</div>' +
-    '<div style="font-size:.75rem;color:#5a5a7a;margin-top:.2rem">Click to replace</div>';
+  document.getElementById('upload-txt').innerHTML='<div style="font-size:1.2rem;margin-bottom:.3rem">✅</div><div style="font-weight:600;color:#16a34a">'+f.name+'</div><div style="font-size:.75rem;color:#5a5a7a;margin-top:.2rem">Click to replace</div>';
 }
 
 function submitForm() {
   var dept = document.getElementById('f-dept').value;
   var pubType = document.getElementById('f-pubtype').value;
-  if (!dept) { showToast('Please select a Department / College', '#c8102e'); return; }
+  if (!dept) { showToast('Please select a College', '#c8102e'); return; }
   if (!pubType) { showToast('Please select a Publication Type', '#c8102e'); return; }
   if (!authorList.length) { showToast('Please add at least one author', '#c8102e'); return; }
 
@@ -867,231 +744,277 @@ function submitForm() {
   var isBook = ['Book','Book Chapter'].indexOf(pubType) > -1;
   var isChapter = pubType === 'Book Chapter';
 
+  // Build colleges from all authors' college fields (deduplicated)
+  var allColleges = [];
+  authorList.forEach(function(a) {
+    a.colleges.split(',').forEach(function(c) {
+      c = c.trim();
+      if (c && c !== 'External' && allColleges.indexOf(c) === -1) allColleges.push(c);
+    });
+  });
+  // Also include the submitting dept
+  if (dept && allColleges.indexOf(dept) === -1) allColleges.unshift(dept);
+
+  // Authors string: "Name [Role|College], Name2 [Role|College]"
+  var authorsStr = authorList.map(function(a){ return a.name+' ['+a.role+'|'+a.colleges+']'; }).join(', ');
+  // authorDetails for Excel: "Name|Role|College;Name2|Role|College"
+  var authorDetails = authorList.map(function(a){ return a.name+'|'+a.role+'|'+a.colleges; }).join(';');
+
   var pub = {
     department: dept,
+    colleges: allColleges.join(','),  // e.g. "SMC,SDC" — paper appears in both
     pubType: pubType,
-    authors: authorList.join(', '),
+    authors: authorsStr,
+    authorDetails: authorDetails,
     sdgGoals: selSdgGoals.length ? 'SDG ' + selSdgGoals.join(', ') : '',
     fileName: uploadedName,
     submittedAt: new Date().toLocaleString('en-IN')
   };
 
   if (isArticle) {
-    var title = document.getElementById('f-title').value.trim();
-    var caname = document.getElementById('f-caname').value.trim();
-    var caemail = document.getElementById('f-caemail').value.trim();
-    var journal = document.getElementById('f-journal').value.trim();
-    if (!title || !caname || !caemail || !journal) {
-      showToast('Please fill in all required article fields (*)', '#c8102e'); return;
-    }
+    var title=document.getElementById('f-title').value.trim();
+    var caname=document.getElementById('f-caname').value.trim();
+    var caemail=document.getElementById('f-caemail').value.trim();
+    var journal=document.getElementById('f-journal').value.trim();
+    if (!title||!caname||!caemail||!journal) { showToast('Please fill in all required article fields (*)', '#c8102e'); return; }
     if (!selQuartile) { showToast('Please select a Quartile', '#c8102e'); return; }
     if (!selIdx.length) { showToast('Please select Indexing', '#c8102e'); return; }
     Object.assign(pub, {
-      title: title,
-      correspondingAuthor: caname,
-      correspondingEmail: caemail,
-      correspondingAffiliation: document.getElementById('f-caaff').value.trim(),
-      journalName: journal,
-      issn: document.getElementById('f-issn').value.trim(),
-      volume: document.getElementById('f-vol').value.trim(),
-      issue: document.getElementById('f-issue').value.trim(),
-      pageFrom: document.getElementById('f-pg1').value.trim(),
-      pageTo: document.getElementById('f-pg2').value.trim(),
-      doi: document.getElementById('f-doi').value.trim(),
-      impactFactor: document.getElementById('f-if').value.trim(),
-      year: document.getElementById('f-year').value.trim(),
-      quartile: selQuartile,
-      indexing: selIdx.join(',')
+      title:title, correspondingAuthor:caname, correspondingEmail:caemail,
+      correspondingAffiliation:document.getElementById('f-caaff').value.trim(),
+      journalName:journal, issn:document.getElementById('f-issn').value.trim(),
+      volume:document.getElementById('f-vol').value.trim(), issue:document.getElementById('f-issue').value.trim(),
+      pageFrom:document.getElementById('f-pg1').value.trim(), pageTo:document.getElementById('f-pg2').value.trim(),
+      doi:document.getElementById('f-doi').value.trim(), impactFactor:document.getElementById('f-if').value.trim(),
+      year:document.getElementById('f-year').value.trim(), quartile:selQuartile, indexing:selIdx.join(',')
     });
   }
 
   if (isBook) {
-    var bookTitle = document.getElementById('f-book-title').value.trim();
-    var bookAuthors = document.getElementById('f-book-authors').value.trim();
-    var isbn = document.getElementById('f-isbn').value.trim();
-    var publisher = document.getElementById('f-publisher').value.trim();
-    if (!bookTitle || !isbn || !publisher) {
-      showToast('Please fill in Title of Book, ISBN, and Publisher', '#c8102e'); return;
-    }
+    var bookTitle=document.getElementById('f-book-title').value.trim();
+    var bookAuthors=document.getElementById('f-book-authors').value.trim();
+    var isbn=document.getElementById('f-isbn').value.trim();
+    var publisher=document.getElementById('f-publisher').value.trim();
+    if (!bookTitle||!isbn||!publisher) { showToast('Please fill in Title of Book, ISBN, and Publisher', '#c8102e'); return; }
     if (isChapter) {
-      var chapterTitle = document.getElementById('f-chapter-title').value.trim();
+      var chapterTitle=document.getElementById('f-chapter-title').value.trim();
       if (!chapterTitle) { showToast('Please enter the Title of Chapter', '#c8102e'); return; }
       pub.bookChapterTitle = chapterTitle;
     }
-    Object.assign(pub, {
-      bookTitle: bookTitle,
-      bookAuthors: bookAuthors,
-      isbn: isbn,
-      publisher: publisher,
-      bookYear: document.getElementById('f-book-year').value.trim()
-    });
+    Object.assign(pub, { bookTitle:bookTitle, bookAuthors:bookAuthors, isbn:isbn, publisher:publisher, bookYear:document.getElementById('f-book-year').value.trim() });
   }
 
   var btn = document.getElementById('submit-btn');
-  btn.disabled = true; btn.textContent = '⏳ Submitting...';
-  document.getElementById('submit-status').textContent = 'Sending to Google Sheets...';
+  btn.disabled=true; btn.textContent='⏳ Submitting...';
+  document.getElementById('submit-status').textContent='Sending to Google Sheets...';
 
-  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-    pub.id = 'local_' + Date.now();
-    allRecords.unshift(pub);
-    finishSubmit(btn, true);
-    return;
+  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL==='YOUR_APPS_SCRIPT_URL_HERE') {
+    pub.id='local_'+Date.now(); allRecords.unshift(pub); finishSubmit(btn,true); return;
   }
 
   fetch(CONFIG.APPS_SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({action: 'submit', data: pub})
+    method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'submit', data:pub})
   }).then(function() {
-    pub.id = 'pending_' + Date.now();
-    allRecords.unshift(pub);
-    finishSubmit(btn, true);
-    setTimeout(loadRecords, 2000);
-  }).catch(function() {
-    finishSubmit(btn, false);
-  });
+    pub.id='pending_'+Date.now(); allRecords.unshift(pub); finishSubmit(btn,true); setTimeout(loadRecords,2000);
+  }).catch(function() { finishSubmit(btn,false); });
 }
 
 function finishSubmit(btn, success) {
-  btn.disabled = false; btn.textContent = 'Submit Publication →';
-  document.getElementById('submit-status').textContent = '';
-  var sm = document.getElementById('success-msg');
-  var em = document.getElementById('error-msg');
-  if (success) {
-    sm.style.display = 'block';
-    setTimeout(function(){ sm.style.display='none'; resetForm(); show('records',document.querySelectorAll('.nav-btn')[2]); }, 2000);
-  } else {
-    em.style.display = 'block';
-    setTimeout(function(){ em.style.display='none'; }, 4000);
-  }
+  btn.disabled=false; btn.textContent='Submit Publication →';
+  document.getElementById('submit-status').textContent='';
+  var sm=document.getElementById('success-msg'), em=document.getElementById('error-msg');
+  if (success) { sm.style.display='block'; setTimeout(function(){sm.style.display='none';resetForm();show('records',document.querySelectorAll('.nav-btn')[2]);},2000); }
+  else { em.style.display='block'; setTimeout(function(){em.style.display='none';},4000); }
 }
 
 function resetForm() {
-  document.getElementById('f-dept').value = '';
-  document.getElementById('f-pubtype').value = '';
+  document.getElementById('f-dept').value='';
+  document.getElementById('f-pubtype').value='';
   onPubTypeChange();
-  ['f-title','f-caname','f-caemail','f-caaff','f-journal','f-issn',
-   'f-vol','f-issue','f-if','f-year','f-pg1','f-pg2','f-doi',
-   'f-chapter-title','f-book-title','f-book-authors','f-isbn','f-publisher','f-book-year'
-  ].forEach(function(id){ var el = document.getElementById(id); if(el) el.value=''; });
-  selQuartile=''; selIdx=[]; selSdgGoals=[]; authorList=[];
-  uploadedFile=null; uploadedName='';
+  ['f-title','f-caname','f-caemail','f-caaff','f-journal','f-issn','f-vol','f-issue','f-if','f-year','f-pg1','f-pg2','f-doi','f-chapter-title','f-book-title','f-book-authors','f-isbn','f-publisher','f-book-year'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  selQuartile=''; selIdx=[]; selSdgGoals=[]; authorList=[]; uploadedFile=null; uploadedName='';
   document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on','red');});
   document.querySelectorAll('.sdg-item').forEach(function(c){c.classList.remove('on');});
-  document.getElementById('sdg-selected-label').textContent = '';
+  document.getElementById('sdg-selected-label').textContent='';
   document.getElementById('upload-zone').classList.remove('has');
   document.getElementById('upload-txt').innerHTML='<div style="font-size:1.5rem;margin-bottom:.3rem">📎</div><div style="font-weight:600;margin-bottom:.2rem">Click to upload file</div><div style="font-size:.78rem;color:#5a5a7a">PDF, Word, or image</div>';
   document.getElementById('file-inp').value='';
   renderAuthorList();
 }
 
-// ── EXCEL DOWNLOAD ──
-function openPwdModal() { document.getElementById('pwd-modal').classList.add('open'); document.getElementById('admin-pwd-input').focus(); }
+// ── EXCEL DOWNLOAD (3 separate college files) ──
+var _pendingCollege = 'SMC';
+var COLLEGE_NAMES = { SMC: 'Santosh Medical College (SMC)', SDC: 'Santosh Dental College (SDC)', AHS: 'Allied Health Sciences (AHS)' };
+
+function openPwdModal(college) {
+  _pendingCollege = college || 'SMC';
+  var label = COLLEGE_NAMES[_pendingCollege] || _pendingCollege;
+  document.getElementById('pwd-college-label').textContent = label;
+  document.getElementById('pwd-college-desc').textContent = label;
+  document.getElementById('pwd-modal').classList.add('open');
+  document.getElementById('admin-pwd-input').value = '';
+  document.getElementById('pwd-err').style.display = 'none';
+  document.getElementById('admin-pwd-input').focus();
+}
 function closePwdModal() { document.getElementById('pwd-modal').classList.remove('open'); document.getElementById('pwd-err').style.display='none'; document.getElementById('admin-pwd-input').value=''; }
 
 function doAdminDownload() {
   var pwd = document.getElementById('admin-pwd-input').value;
-  if (pwd !== CONFIG.ADMIN_PASSWORD) {
-    document.getElementById('pwd-err').style.display='block'; return;
-  }
+  if (pwd !== CONFIG.ADMIN_PASSWORD) { document.getElementById('pwd-err').style.display='block'; return; }
   closePwdModal();
-  generateExcel();
+  generateExcel(_pendingCollege);
 }
 
-function generateExcel() {
+function generateExcel(college) {
   if (!allRecords.length) { showToast('No records to download', '#d97706'); return; }
-  showToast('Generating Excel...', '#1a2744');
+  var label = COLLEGE_NAMES[college] || college;
+  showToast('Generating '+label+' Excel...', '#1a2744');
 
-  var wb = XLSX.utils.book_new();
+  // Filter records for this college (a paper with colleges="SMC,SDC" appears in both SMC and SDC files)
+  var recs = college === 'ALL' ? allRecords : allRecords.filter(function(p){
+    return (p.colleges || p.department || '').indexOf(college) > -1;
+  });
 
-  var headers = ['S.No','Department','Publication Type','Title / Chapter Title','Book Title (if applicable)',
-    'Authors','Corresponding Author','Corresponding Email','Affiliation',
+  if (!recs.length && college !== 'ALL') { showToast('No records for '+college, '#d97706'); return; }
+
+  var headers = ['S.No','Colleges','Submitting College','Publication Type','Title / Chapter Title','Book Title (if applicable)',
+    'Authors (with Role & College)','Corresponding Author','Corresponding Email','Affiliation',
     'Journal Name','ISSN No.','Volume','Issue','Page From','Page To',
     'ISBN No.','Publisher','DOI','Impact Factor','Year','Quartile','Indexing',
     'SDG Goals','Submitted Date'];
 
-  var rows = allRecords.map(function(p, i) {
+  // Build rows — parse authorDetails for red highlight logic
+  var rowData = recs.map(function(p, i) {
     var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : (p.indexing||'');
-    var title = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||'') : (p.title || p.bookTitle || '');
-    var bookTitle = p.pubType === 'Book Chapter' ? (p.bookTitle||'') : (p.pubType === 'Book' ? (p.bookTitle||'') : '');
-    return [i+1, p.department, p.pubType, title, bookTitle,
-      p.authors||p.bookAuthors, p.correspondingAuthor, p.correspondingEmail, p.correspondingAffiliation,
-      p.journalName, p.issn, p.volume, p.issue, p.pageFrom, p.pageTo,
-      p.isbn, p.publisher, p.doi, p.impactFactor, p.year||p.bookYear, p.quartile, idxStr,
-      p.sdgGoals, p.submittedAt];
+    var title = p.pubType==='Book Chapter' ? (p.bookChapterTitle||'') : (p.title||p.bookTitle||'');
+    var bookTitle = ['Book','Book Chapter'].indexOf(p.pubType)>-1 ? (p.bookTitle||'') : '';
+    return {
+      sno: i+1,
+      colleges: p.colleges||p.department||'',
+      dept: p.department||'',
+      pubType: p.pubType||'',
+      title: title,
+      bookTitle: bookTitle,
+      authors: p.authors||p.bookAuthors||'',
+      authorDetails: p.authorDetails||'',
+      corrAuthor: p.correspondingAuthor||'',
+      corrEmail: p.correspondingEmail||'',
+      affil: p.correspondingAffiliation||'',
+      journal: p.journalName||'',
+      issn: p.issn||'',
+      vol: p.volume||'',
+      issue: p.issue||'',
+      pg1: p.pageFrom||'',
+      pg2: p.pageTo||'',
+      isbn: p.isbn||'',
+      pub: p.publisher||'',
+      doi: p.doi||'',
+      IF: p.impactFactor||'',
+      year: p.year||p.bookYear||'',
+      quartile: p.quartile||'',
+      indexing: idxStr,
+      sdg: p.sdgGoals||'',
+      date: p.submittedAt||''
+    };
   });
 
-  var ws1 = XLSX.utils.aoa_to_sheet([headers].concat(rows));
-  ws1['!cols'] = [
-    {wch:6},{wch:22},{wch:16},{wch:48},{wch:40},
-    {wch:35},{wch:25},{wch:30},{wch:35},
-    {wch:38},{wch:14},{wch:8},{wch:8},{wch:10},{wch:10},
-    {wch:22},{wch:20},{wch:30},{wch:12},{wch:6},{wch:10},{wch:20},
-    {wch:18},{wch:18}
-  ];
-  XLSX.utils.book_append_sheet(wb, ws1, 'All Publications');
-
-  // Dept Summary
-  var deptMap = {};
-  allRecords.forEach(function(p) {
-    var key = p.department || 'Unknown';
-    if (!deptMap[key]) deptMap[key] = {total:0,article:0,review:0,meta:0,book:0,q1:0,q2:0,q3:0,q4:0,scopus:0,pubmed:0,wos:0};
-    var d = deptMap[key];
-    d.total++;
-    if (p.pubType==='Original Article') d.article++;
-    else if (p.pubType==='Review Article') d.review++;
-    else if (p.pubType==='Meta Analysis') d.meta++;
-    else if (p.pubType==='Book'||p.pubType==='Book Chapter') d.book++;
-    if (p.quartile==='Q1') d.q1++; else if (p.quartile==='Q2') d.q2++;
-    else if (p.quartile==='Q3') d.q3++; else if (p.quartile==='Q4') d.q4++;
-    var idxArr = Array.isArray(p.indexing) ? p.indexing : (p.indexing||'').split(',').map(function(x){return x.trim();});
-    if (idxArr.includes('Scopus')) d.scopus++;
-    if (idxArr.includes('PubMed')) d.pubmed++;
-    if (idxArr.includes('WoS')) d.wos++;
-  });
-
-  var sh2 = [['Department','Total','Original Article','Review Article','Meta Analysis','Book/Chapter','Q1','Q2','Q3','Q4','Scopus','PubMed','WoS']];
-  Object.keys(deptMap).sort().forEach(function(dept) {
-    var d = deptMap[dept];
-    sh2.push([dept,d.total,d.article,d.review,d.meta,d.book,d.q1,d.q2,d.q3,d.q4,d.scopus,d.pubmed,d.wos]);
-  });
-  var ws2 = XLSX.utils.aoa_to_sheet(sh2);
-  ws2['!cols'] = [{wch:30},{wch:8},{wch:16},{wch:15},{wch:14},{wch:14},{wch:6},{wch:6},{wch:6},{wch:6},{wch:8},{wch:8},{wch:6}];
-  XLSX.utils.book_append_sheet(wb, ws2, 'Department Summary');
-
-  // Per-dept sheets
-  var depts = [...new Set(allRecords.map(function(p){return p.department;}))].sort();
-  depts.forEach(function(dept) {
-    var dRows = allRecords.filter(function(p){return p.department===dept;});
-    var shData = [headers].concat(dRows.map(function(p,i){
-      var idxStr = Array.isArray(p.indexing) ? p.indexing.join(', ') : (p.indexing||'');
-      var title = p.pubType === 'Book Chapter' ? (p.bookChapterTitle||'') : (p.title || p.bookTitle || '');
-      var bookTitle = ['Book','Book Chapter'].indexOf(p.pubType) > -1 ? (p.bookTitle||'') : '';
-      return [i+1,p.department,p.pubType,title,bookTitle,
-        p.authors||p.bookAuthors,p.correspondingAuthor,p.correspondingEmail,p.correspondingAffiliation,
-        p.journalName,p.issn,p.volume,p.issue,p.pageFrom,p.pageTo,
-        p.isbn,p.publisher,p.doi,p.impactFactor,p.year||p.bookYear,p.quartile,idxStr,
-        p.sdgGoals,p.submittedAt];
-    }));
-    var wsD = XLSX.utils.aoa_to_sheet(shData);
-    wsD['!cols'] = ws1['!cols'];
-    var shName = dept.substring(0,25).replace(/[:\\\/\?\*\[\]]/g,'');
-    XLSX.utils.book_append_sheet(wb, wsD, shName);
-  });
-
+  var wb = XLSX.utils.book_new();
   var date = new Date().toISOString().split('T')[0];
-  XLSX.writeFile(wb, 'Research_Publications_'+date+'.xlsx');
-  showToast('✅ Excel downloaded!', '#16a34a', 5000);
+
+  // Helper to build a worksheet from rowData with red highlighting for non-named-role authors
+  function makeSheet(data) {
+    var wsData = [headers];
+    data.forEach(function(r) {
+      wsData.push([r.sno, r.colleges, r.dept, r.pubType, r.title, r.bookTitle,
+        r.authors, r.corrAuthor, r.corrEmail, r.affil,
+        r.journal, r.issn, r.vol, r.issue, r.pg1, r.pg2,
+        r.isbn, r.pub, r.doi, r.IF, r.year, r.quartile, r.indexing,
+        r.sdg, r.date]);
+    });
+    var ws = XLSX.utils.aoa_to_sheet(wsData);
+    ws['!cols'] = [{wch:6},{wch:14},{wch:10},{wch:16},{wch:46},{wch:38},
+      {wch:50},{wch:25},{wch:30},{wch:35},{wch:36},{wch:13},{wch:7},{wch:7},
+      {wch:9},{wch:9},{wch:22},{wch:18},{wch:28},{wch:12},{wch:6},{wch:9},
+      {wch:20},{wch:18},{wch:18}];
+
+    // Change 3: Highlight red — rows where ALL authors have no named role
+    data.forEach(function(r, i) {
+      var rowIdx = i + 2; // 1-indexed, header is row 1
+      var details = r.authorDetails;
+      var hasNamedRole = false;
+      if (details) {
+        details.split(';').forEach(function(part) {
+          var bits = part.split('|');
+          if (bits[1] && NAMED_ROLES.indexOf(bits[1].trim()) > -1) hasNamedRole = true;
+        });
+      } else {
+        // fallback: check authors string for role tags
+        if (r.authors.indexOf('First Author')>-1 || r.authors.indexOf('Second Author')>-1 || r.authors.indexOf('Corresponding Author')>-1) hasNamedRole = true;
+      }
+      if (!hasNamedRole) {
+        // highlight the authors cell (col G = index 6, 0-based)
+        var cellAddr = XLSX.utils.encode_cell({r: rowIdx-1, c: 6});
+        if (ws[cellAddr]) {
+          ws[cellAddr].s = { fill: { fgColor: { rgb: 'FFCCCC' } }, font: { color: { rgb: 'CC0000' }, bold: true } };
+        }
+        // Also highlight the whole row col A
+        var cellA = XLSX.utils.encode_cell({r: rowIdx-1, c: 0});
+        if (ws[cellA]) ws[cellA].s = { fill: { fgColor: { rgb: 'FFCCCC' } } };
+      }
+    });
+    return ws;
+  }
+
+  // Summary rows
+  function makeSummary(data, label) {
+    var typeMap = {}; var qMap = {Q1:0,Q2:0,Q3:0,Q4:0}; var idxMap = {Scopus:0,PubMed:0,WoS:0,None:0};
+    data.forEach(function(r) {
+      typeMap[r.pubType] = (typeMap[r.pubType]||0)+1;
+      if(qMap[r.quartile]!==undefined) qMap[r.quartile]++;
+      ['Scopus','PubMed','WoS','None'].forEach(function(k){ if(r.indexing.indexOf(k)>-1) idxMap[k]++; });
+    });
+    var rows = [
+      [label+' — PUBLICATION SUMMARY'],
+      ['Total Papers:', data.length, '', 'Note: Papers with authors from multiple colleges appear in each college file but count once overall'],
+      [],
+      ['BY TYPE','Count'], ['Original Article', typeMap['Original Article']||0],
+      ['Review Article', typeMap['Review Article']||0], ['Meta Analysis', typeMap['Meta Analysis']||0],
+      ['Book', typeMap['Book']||0], ['Book Chapter', typeMap['Book Chapter']||0],
+      [],
+      ['BY QUARTILE','Count'], ['Q1',qMap.Q1],['Q2',qMap.Q2],['Q3',qMap.Q3],['Q4',qMap.Q4],
+      [],
+      ['BY INDEXING','Count'], ['Scopus',idxMap.Scopus],['PubMed',idxMap.PubMed],['WoS',idxMap.WoS],['None',idxMap.None]
+    ];
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:22},{wch:10},{wch:10},{wch:70}];
+    return ws;
+  }
+
+  if (college === 'ALL') {
+    XLSX.utils.book_append_sheet(wb, makeSheet(rowData), 'All Publications');
+    ['SMC','SDC','AHS'].forEach(function(c) {
+      var cRecs = rowData.filter(function(r){ return (r.colleges||r.dept).indexOf(c)>-1; });
+      if (cRecs.length) {
+        XLSX.utils.book_append_sheet(wb, makeSheet(cRecs), c+' Publications');
+        XLSX.utils.book_append_sheet(wb, makeSummary(cRecs, COLLEGE_NAMES[c]||c), c+' Summary');
+      }
+    });
+    XLSX.utils.book_append_sheet(wb, makeSummary(rowData, 'ALL Colleges'), 'Overall Summary');
+    XLSX.writeFile(wb, 'Research_Publications_ALL_'+date+'.xlsx');
+  } else {
+    XLSX.utils.book_append_sheet(wb, makeSheet(rowData), label+' Publications');
+    XLSX.utils.book_append_sheet(wb, makeSummary(rowData, label), 'Summary');
+    XLSX.writeFile(wb, 'Research_'+college+'_'+date+'.xlsx');
+  }
+
+  showToast('✅ '+label+' Excel downloaded! Red rows = authors without named role.', '#16a34a', 6000);
 }
 
 // ── TOAST ──
 function showToast(msg, bg, dur) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = bg || '#1a2744';
-  t.style.display = 'block';
-  setTimeout(function(){ t.style.display='none'; }, dur || 3000);
+  var t=document.getElementById('toast'); t.textContent=msg; t.style.background=bg||'#1a2744'; t.style.display='block';
+  setTimeout(function(){t.style.display='none';},dur||3000);
 }
 </script>
 </body>
