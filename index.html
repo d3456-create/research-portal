@@ -140,6 +140,7 @@ a{color:#c8102e}
       <button class="btn-out" onclick="openPwdModal('SMC')" style="border-color:#c8102e;color:#c8102e">⬇ SMC Excel</button>
       <button class="btn-out" onclick="openPwdModal('SDC')" style="border-color:#1a2744;color:#1a2744">⬇ SDC Excel</button>
       <button class="btn-out" onclick="openPwdModal('AHS')" style="border-color:#16a34a;color:#16a34a">⬇ AHS Excel</button>
+      <button class="btn-out" onclick="openPwdModal('CRF')" style="border-color:#7c3aed;color:#7c3aed">⬇ CRF/DBMR Excel</button>
     </div>
   </div>
 
@@ -179,6 +180,7 @@ a{color:#c8102e}
         <option value="SMC">SMC — Santosh Medical College</option>
         <option value="SDC">SDC — Santosh Dental College</option>
         <option value="AHS">AHS — Allied Health Sciences</option>
+        <option value="CRF">CRF/DBMR — Central Research Facility / DBMR</option>
       </select>
     </div>
   </div>
@@ -217,10 +219,15 @@ a{color:#c8102e}
         <option value="SMC">SMC</option>
         <option value="SDC">SDC</option>
         <option value="AHS">AHS</option>
+        <option value="CRF">CRF/DBMR</option>
         <option value="SMC,SDC">SMC + SDC</option>
         <option value="SMC,AHS">SMC + AHS</option>
+        <option value="SMC,CRF">SMC + CRF/DBMR</option>
         <option value="SDC,AHS">SDC + AHS</option>
-        <option value="SMC,SDC,AHS">All Three</option>
+        <option value="SDC,CRF">SDC + CRF/DBMR</option>
+        <option value="AHS,CRF">AHS + CRF/DBMR</option>
+        <option value="SMC,SDC,AHS">All Three (SMC+SDC+AHS)</option>
+        <option value="SMC,SDC,AHS,CRF">All Four</option>
         <option value="External">External</option>
       </select>
       <button class="btn-dk" type="button" onclick="addAuthor()" style="white-space:nowrap">+ Add</button>
@@ -340,7 +347,7 @@ a{color:#c8102e}
         <div style="font-size:.78rem;color:#5a5a7a">PDF, Word, or image</div>
       </div>
     </div>
-    <div style="font-size:.78rem;color:#5a5a7a;margin-top:.5rem">Note: Files are stored as base64 in Google Sheets. For large files, consider linking via Google Drive URL instead.</div>
+    <div style="font-size:.78rem;color:#5a5a7a;margin-top:.5rem">📁 Files are uploaded to <strong>Google Drive</strong> (folder: Research Publications). The Drive link is saved in Google Sheets.</div>
   </div>
 
   <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
@@ -363,6 +370,7 @@ a{color:#c8102e}
       <button class="btn-out" onclick="openPwdModal('SMC')" style="border-color:#c8102e;color:#c8102e">⬇ SMC</button>
       <button class="btn-out" onclick="openPwdModal('SDC')" style="border-color:#1a2744;color:#1a2744">⬇ SDC</button>
       <button class="btn-out" onclick="openPwdModal('AHS')" style="border-color:#16a34a;color:#16a34a">⬇ AHS</button>
+      <button class="btn-out" onclick="openPwdModal('CRF')" style="border-color:#7c3aed;color:#7c3aed">⬇ CRF/DBMR</button>
     </div>
   </div>
   <div class="filter-row">
@@ -372,6 +380,7 @@ a{color:#c8102e}
       <option value="SMC">SMC</option>
       <option value="SDC">SDC</option>
       <option value="AHS">AHS</option>
+      <option value="CRF">CRF/DBMR</option>
     </select>
     <select id="f-fpubtype" onchange="renderRecords()">
       <option value="">All Types</option>
@@ -406,9 +415,10 @@ a{color:#c8102e}
 // CONFIGURATION
 // ═══════════════════════════════════════════════
 var CONFIG = {
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxLwvaVCpv8-Yfer6ZbW4nWRQJCR3Z328Xnj3AzA3ZhfT-gqiDGxmLZMRgG4jayG1yGqQ/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbztxGdKmWJ87kP51jxa5JBSa9EZJrgDOGPGyN0aExTN-4BE6K6_opGsf2Gqb7bWCGU9Rw/exec",
   ADMIN_PASSWORD: "Research@2024",
-  AUTO_REFRESH: 30
+  AUTO_REFRESH: 30,
+  DRIVE_FOLDER_ID: "1V2Q0qM-5DKIWwUFxd7B3RvgKIaeXM4L4"
 };
 // ═══════════════════════════════════════════════
 
@@ -808,6 +818,12 @@ function submitForm() {
   btn.disabled=true; btn.textContent='⏳ Submitting...';
   document.getElementById('submit-status').textContent='Sending to Google Sheets...';
 
+  // Attach file data + Drive folder for server-side upload
+  if (uploadedFile) {
+    pub.fileBase64 = uploadedFile;  // base64 data URL
+    pub.driveFolderId = CONFIG.DRIVE_FOLDER_ID;
+  }
+
   if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL==='YOUR_APPS_SCRIPT_URL_HERE') {
     pub.id='local_'+Date.now(); allRecords.unshift(pub); finishSubmit(btn,true); return;
   }
@@ -845,7 +861,7 @@ function resetForm() {
 
 // ── EXCEL DOWNLOAD (3 separate college files) ──
 var _pendingCollege = 'SMC';
-var COLLEGE_NAMES = { SMC: 'Santosh Medical College (SMC)', SDC: 'Santosh Dental College (SDC)', AHS: 'Allied Health Sciences (AHS)' };
+var COLLEGE_NAMES = { SMC: 'Santosh Medical College (SMC)', SDC: 'Santosh Dental College (SDC)', AHS: 'Allied Health Sciences (AHS)', CRF: 'CRF/DBMR' };
 
 function openPwdModal(college) {
   _pendingCollege = college || 'SMC';
@@ -993,7 +1009,7 @@ function generateExcel(college) {
 
   if (college === 'ALL') {
     XLSX.utils.book_append_sheet(wb, makeSheet(rowData), 'All Publications');
-    ['SMC','SDC','AHS'].forEach(function(c) {
+    ['SMC','SDC','AHS','CRF'].forEach(function(c) {
       var cRecs = rowData.filter(function(r){ return (r.colleges||r.dept).indexOf(c)>-1; });
       if (cRecs.length) {
         XLSX.utils.book_append_sheet(wb, makeSheet(cRecs), c+' Publications');
